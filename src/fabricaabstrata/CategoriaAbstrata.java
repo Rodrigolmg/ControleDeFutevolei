@@ -16,7 +16,7 @@ import fabricasconcretas.CategoriaC;
 import fabricasconcretas.CategoriaIniciante;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import persistencia.CategoriaDAO;
+import persistencia.PCategoria;
 
 /**
  *
@@ -28,7 +28,7 @@ public abstract class CategoriaAbstrata {
     protected String descricao;
     
     public static ArrayList<String> getListaDeFabricas() throws SQLException{
-        ArrayList<String> list = new CategoriaDAO().listarDescricao();
+        ArrayList<String> list = new PCategoria().listarDescricao();
         return list;
     }
     

@@ -5,9 +5,8 @@
  */
 package observer;
 
-import interfaces.Observador;
-import interfaces.Sujeito;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -15,7 +14,7 @@ import java.util.ArrayList;
  */
 public class CBFV implements Sujeito{
     
-    public ArrayList<Observador> observers;
+    public List<Observador> observers;
     public DadosDoTorneio dados;
 
     public CBFV() {
@@ -44,7 +43,7 @@ public class CBFV implements Sujeito{
     }
 
     @Override
-    public ArrayList<Observador> listarObservador() {
+    public List<Observador> listarObservador() {
         return observers;
     }
     

@@ -17,7 +17,7 @@ import java.util.ArrayList;
  *
  * @author rodri
  */
-public class InscricaoDAO {
+public class PInscricao {
     public void incluir(Inscricao inscricao) throws SQLException{
         
         String sql = "INSERT INTO inscricao(torneio, jogador)"
@@ -51,8 +51,8 @@ public class InscricaoDAO {
         
         if(rs.next()){
             return new Inscricao(rs.getInt(1), 
-                    new TorneioDAO().consultar(rs.getInt(2)), 
-                    new JogadorDAO().consultar(rs.getInt(3)));
+                    new PTorneio().consultar(rs.getInt(2)), 
+                    new PJogador().consultar(rs.getInt(3)));
         }
         return null;
         
@@ -104,8 +104,8 @@ public class InscricaoDAO {
         
         while(rs.next()){
             lista.add(new Inscricao(rs.getInt(1), 
-                    new TorneioDAO().consultar(rs.getInt(2)), 
-                    new JogadorDAO().consultar(rs.getInt(3))));
+                    new PTorneio().consultar(rs.getInt(2)), 
+                    new PJogador().consultar(rs.getInt(3))));
         }
         return lista;
     }

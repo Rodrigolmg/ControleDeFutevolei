@@ -8,9 +8,9 @@ package fabricasconcretas;
 import entidades.Jogador;
 import entidades.Torneio;
 import java.util.ArrayList;
-import persistencia.JogadorDAO;
+import persistencia.PJogador;
 import fabricaabstrata.CategoriaAbstrata;
-import persistencia.TorneioDAO;
+import persistencia.PTorneio;
 
 /**
  *
@@ -26,7 +26,7 @@ public class CategoriaIniciante extends CategoriaAbstrata{
     @Override
     public ArrayList<Jogador> getListaJogadores() {
         try {
-            return new JogadorDAO().listarNomes(idCat);
+            return new PJogador().listarNomes(idCat);
         } catch (Exception e) {
             return null;
         }
@@ -35,7 +35,7 @@ public class CategoriaIniciante extends CategoriaAbstrata{
     @Override
     public ArrayList<Torneio> getListaTorneios() {
         try {
-            return new TorneioDAO().listarDescricao(idCat);
+            return new PTorneio().listarDescricao(idCat);
         } catch (Exception e) {
             return null;
         }

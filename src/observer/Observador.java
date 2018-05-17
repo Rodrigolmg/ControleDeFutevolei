@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-package interfaces;
+package observer;
 
 import entidades.Jogador;
 import observer.DadosDoTorneio;

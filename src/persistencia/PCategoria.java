@@ -18,7 +18,7 @@ import fabricaabstrata.CategoriaAbstrata;
  *
  * @author rodri
  */
-public class CategoriaDAO{
+public class PCategoria{
     
     public CategoriaAbstrata consultar(int id) throws SQLException{
         String sql = "SELECT * FROM categoria WHERE id = ?;";

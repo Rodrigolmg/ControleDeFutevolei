@@ -142,7 +142,7 @@
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel1">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Mostrar usu&#xe1;rio do:"/>
+        <Property name="text" type="java.lang.String" value="Mostrar pela categoria:"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel2">

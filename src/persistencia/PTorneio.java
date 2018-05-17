@@ -19,7 +19,7 @@ import java.util.ArrayList;
  *
  * @author rodri
  */
-public class TorneioDAO {
+public class PTorneio {
     public void incluir(Torneio torneio) throws SQLException{
         
         String sql = "INSERT INTO torneio(descricao_torn, categoria, data_ini,"

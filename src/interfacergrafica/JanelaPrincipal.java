@@ -5,14 +5,9 @@
  */
 package interfacergrafica;
 
-import entidades.Inscricao;
-import java.sql.Date;
-import java.time.LocalDate;
-import java.util.ArrayList;
+
 import javax.swing.JOptionPane;
 import observer.CBFV;
-import observer.DadosDoTorneio;
-import persistencia.InscricaoDAO;
 
 /**
  *
@@ -21,8 +16,6 @@ import persistencia.InscricaoDAO;
 public class JanelaPrincipal extends javax.swing.JFrame {
     
     static CBFV cbfv = new CBFV();
-    
-    //Inscricao inscricao, Date dataAtual, int diasRestantes
     
 
     /**

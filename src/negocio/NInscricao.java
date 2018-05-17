@@ -8,7 +8,7 @@ package negocio;
 import entidades.Inscricao;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import persistencia.InscricaoDAO;
+import persistencia.PInscricao;
 
 /**
  *
@@ -16,18 +16,18 @@ import persistencia.InscricaoDAO;
  */
 public class NInscricao {
     public void incluir(Inscricao inscricao) throws SQLException{
-        new InscricaoDAO().incluir(inscricao);
+        new PInscricao().incluir(inscricao);
     }
     
     public void excluir(int codigo) throws SQLException{
-        new InscricaoDAO().excluir(codigo);
+        new PInscricao().excluir(codigo);
     }
     
     public Inscricao consultar(int codigo) throws SQLException{
-        return new InscricaoDAO().consultar(codigo);
+        return new PInscricao().consultar(codigo);
     }
     
     public ArrayList<Inscricao> listar() throws SQLException{
-        return new InscricaoDAO().listar();
+        return new PInscricao().listar();
     }
 }

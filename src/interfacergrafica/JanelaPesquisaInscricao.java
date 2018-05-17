@@ -10,7 +10,9 @@ package interfacergrafica;
 
 
 
+import entidades.Inscricao;
 import entidades.Jogador;
+import entidades.Torneio;
 import fabricaabstrata.CategoriaAbstrata;
 import interfaces.PopularCombo;
 import java.util.ArrayList;
@@ -20,6 +22,7 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import negocio.NInscricao;
 import negocio.NJogador;
+import negocio.NTorneio;
 
 /**
  *
@@ -38,6 +41,11 @@ public class JanelaPesquisaInscricao extends javax.swing.JInternalFrame implemen
     }
     
     public JanelaPesquisaInscricao(JDesktopPane principal){
+        this();
+        this.principal = principal;
+    }
+    
+    public JanelaPesquisaInscricao(JDesktopPane principal, Inscricao inscricao){
         this();
         this.principal = principal;
     }
@@ -188,11 +196,11 @@ public class JanelaPesquisaInscricao extends javax.swing.JInternalFrame implemen
             if(btnAtivar.isSelected()){
                 int linha = tblResultado.getSelectedRow();
                 String codigo = tblResultado.getValueAt(linha,0).toString();
+                String codigoTor = tblResultado.getValueAt(linha,2).toString();
                 
-                Jogador jogador = new NJogador().consultar(
-                        Integer.parseInt(codigo));
+                Inscricao inscricao = new NInscricao().consultar(Integer.parseInt(codigo));
                 
-                JanelaJogadorCadastro janela = new JanelaJogadorCadastro(principal, jogador);
+                JanelaInscricao janela = new JanelaInscricao(principal, inscricao);
 
                 principal.add(janela);
                 janela.setVisible(true);
@@ -215,7 +223,6 @@ public class JanelaPesquisaInscricao extends javax.swing.JInternalFrame implemen
             tblResultado.setEnabled(false);
             btnAtivar.setText("Mouse desativado");
         }
-        System.out.println(btnAtivar.isSelected());
     }//GEN-LAST:event_btnAtivarActionPerformed
 
 
@@ -258,19 +265,73 @@ public class JanelaPesquisaInscricao extends javax.swing.JInternalFrame implemen
             
             switch(index){
                 case 1: 
-                    Vector<String> detalhe = new Vector<>();
+                    Vector detalhe = new Vector<>();
                     new NInscricao().listar().forEach(torneio -> {
                         Vector<String> linha = new Vector<>();
-                        linha.add(Integer.toString(torneio.getIdInscricao()));
-                        linha.add(torneio.getTorneio().getDescricao());
-                        linha.add(Integer.toString(torneio.getTorneio().getId()));
-                        linha.add(torneio.getJogador().getNome());
-                        linha.add(Integer.toString(torneio.getJogador().getId()));
-                        linha.add(Integer.toString(torneio.getJogador().
-                                getCategoria().getIdCat()));
+                        if(torneio.getJogador().getCategoria().getIdCat() == index){
+                            linha.add(Integer.toString(torneio.getIdInscricao()));
+                            linha.add(torneio.getTorneio().getDescricao());
+                            linha.add(Integer.toString(torneio.getTorneio().getId()));
+                            linha.add(torneio.getJogador().getNome());
+                            linha.add(Integer.toString(torneio.getJogador().getId()));
+                            linha.add(Integer.toString(torneio.getJogador().
+                                    getCategoria().getIdCat()));
+                            detalhe.add(linha);
+                        }
                     });
+                    tblResultado.setModel(new DefaultTableModel(detalhe, cabecalho));
                     break;
-                    
+                case 2: 
+                    Vector detalhe2 = new Vector<>();
+                    new NInscricao().listar().forEach(torneio -> {
+                        Vector<String> linha = new Vector<>();
+                        if(torneio.getJogador().getCategoria().getIdCat() == index){
+                            linha.add(Integer.toString(torneio.getIdInscricao()));
+                            linha.add(torneio.getTorneio().getDescricao());
+                            linha.add(Integer.toString(torneio.getTorneio().getId()));
+                            linha.add(torneio.getJogador().getNome());
+                            linha.add(Integer.toString(torneio.getJogador().getId()));
+                            linha.add(Integer.toString(torneio.getJogador().
+                                    getCategoria().getIdCat()));
+                            detalhe2.add(linha);
+                        }
+                    });
+                    tblResultado.setModel(new DefaultTableModel(detalhe2, cabecalho));
+                    break;
+                case 3: 
+                    Vector detalhe3 = new Vector<>();
+                    new NInscricao().listar().forEach(torneio -> {
+                        Vector<String> linha = new Vector<>();
+                        if(torneio.getJogador().getCategoria().getIdCat() == index){
+                            linha.add(Integer.toString(torneio.getIdInscricao()));
+                            linha.add(torneio.getTorneio().getDescricao());
+                            linha.add(Integer.toString(torneio.getTorneio().getId()));
+                            linha.add(torneio.getJogador().getNome());
+                            linha.add(Integer.toString(torneio.getJogador().getId()));
+                            linha.add(Integer.toString(torneio.getJogador().
+                                    getCategoria().getIdCat()));
+                            detalhe3.add(linha);
+                        }
+                    });
+                    tblResultado.setModel(new DefaultTableModel(detalhe3, cabecalho));
+                    break;
+                case 4: 
+                    Vector detalhe4 = new Vector<>();
+                    new NInscricao().listar().forEach(torneio -> {
+                        Vector<String> linha = new Vector<>();
+                        if(torneio.getJogador().getCategoria().getIdCat() == index){
+                            linha.add(Integer.toString(torneio.getIdInscricao()));
+                            linha.add(torneio.getTorneio().getDescricao());
+                            linha.add(Integer.toString(torneio.getTorneio().getId()));
+                            linha.add(torneio.getJogador().getNome());
+                            linha.add(Integer.toString(torneio.getJogador().getId()));
+                            linha.add(Integer.toString(torneio.getJogador().
+                                    getCategoria().getIdCat()));
+                            detalhe4.add(linha);
+                        }
+                    });
+                    tblResultado.setModel(new DefaultTableModel(detalhe4, cabecalho));
+                    break;
             }
             
             
@@ -279,7 +340,4 @@ public class JanelaPesquisaInscricao extends javax.swing.JInternalFrame implemen
 //            JOptionPane.showMessageDialog(rootPane, e.getMessage());
         }
     }
-    
-    
-
 }

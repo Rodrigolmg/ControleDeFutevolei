@@ -107,7 +107,7 @@ public class JanelaPesquisaJogador extends javax.swing.JInternalFrame implements
             }
         });
 
-        jLabel1.setText("Mostrar usuário do:");
+        jLabel1.setText("Mostrar pela categoria:");
 
         jLabel2.setText("Ativar mouse:");
 
@@ -161,7 +161,15 @@ public class JanelaPesquisaJogador extends javax.swing.JInternalFrame implements
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnFecharActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFecharActionPerformed
-        this.dispose();
+        try {
+            JanelaJogadorCadastro janela = new JanelaJogadorCadastro(principal);
+
+            principal.add(janela);
+            janela.setVisible(true);
+            this.dispose();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(rootPane, e.getMessage());
+        }
     }//GEN-LAST:event_btnFecharActionPerformed
 
     private void cmbCategoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbCategoriaActionPerformed
@@ -192,8 +200,8 @@ public class JanelaPesquisaJogador extends javax.swing.JInternalFrame implements
                 
             }
         } catch (Exception e) {
-//            JOptionPane.showMessageDialog(rootPane, e.getMessage());
-                e.printStackTrace();
+            JOptionPane.showMessageDialog(rootPane, e.getMessage());
+//            e.printStackTrace();
         }
     }//GEN-LAST:event_tblResultadoMousePressed
 
@@ -206,7 +214,6 @@ public class JanelaPesquisaJogador extends javax.swing.JInternalFrame implements
             tblResultado.setEnabled(false);
             btnAtivar.setText("Mouse desativado");
         }
-        System.out.println(btnAtivar.isSelected());
     }//GEN-LAST:event_btnAtivarActionPerformed
 
 
@@ -226,13 +233,10 @@ public class JanelaPesquisaJogador extends javax.swing.JInternalFrame implements
     public void popularCombo() {
         try {
             cmbCategoria.removeAllItems();
-            ArrayList<String> listaCat = CategoriaAbstrata.getListaDeFabricas();
-            listaCat.forEach(categoria -> {
-                cmbCategoria.addItem(categoria);
-            });
+            CategoriaAbstrata.getListaDeFabricas().forEach(categoria -> cmbCategoria.addItem(categoria));
         } catch (Exception e) {
             e.printStackTrace();
-            JOptionPane.showMessageDialog(rootPane, e.getMessage());
+//            JOptionPane.showMessageDialog(rootPane, e.getMessage());
         }
     }
     
@@ -299,8 +303,8 @@ public class JanelaPesquisaJogador extends javax.swing.JInternalFrame implements
             
             
         } catch (Exception e) {
-            e.printStackTrace();
-//            JOptionPane.showMessageDialog(rootPane, e.getMessage());
+//            e.printStackTrace();
+            JOptionPane.showMessageDialog(rootPane, e.getMessage());
         }
     }
     

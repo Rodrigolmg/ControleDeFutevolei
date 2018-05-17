@@ -9,7 +9,7 @@ package negocio;
 import entidades.Torneio;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import persistencia.TorneioDAO;
+import persistencia.PTorneio;
 
 /**
  *
@@ -18,19 +18,19 @@ import persistencia.TorneioDAO;
 public class NTorneio {
     
     public void incluir(Torneio torneio) throws SQLException{
-        if(torneio.getId() != 0) new TorneioDAO().alterar(torneio);
-        else new TorneioDAO().incluir(torneio);
+        if(torneio.getId() != 0) new PTorneio().alterar(torneio);
+        else new PTorneio().incluir(torneio);
     }
     
     public void excluir(int codigo) throws SQLException{
-        new TorneioDAO().excluir(codigo);
+        new PTorneio().excluir(codigo);
     }
     
     public Torneio consultar(int codigo) throws SQLException{
-        return new TorneioDAO().consultar(codigo);
+        return new PTorneio().consultar(codigo);
     }
     
     public ArrayList<Torneio> listar() throws SQLException{
-        return new TorneioDAO().listar();
+        return new PTorneio().listar();
     } 
 }

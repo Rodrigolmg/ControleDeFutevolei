@@ -26,7 +26,7 @@ import negocio.NTorneio;
  *
  * @author aluno
  */
-public class JanelaPesquisaTorneio extends javax.swing.JInternalFrame {
+public class JanelaPesquisaTorneio extends javax.swing.JInternalFrame implements PopularCombo{
     
     private JDesktopPane principal;
     
@@ -35,6 +35,7 @@ public class JanelaPesquisaTorneio extends javax.swing.JInternalFrame {
      */
     public JanelaPesquisaTorneio() {
         initComponents();
+        popularCombo();
     }
     
     public JanelaPesquisaTorneio(JDesktopPane principal){
@@ -57,6 +58,8 @@ public class JanelaPesquisaTorneio extends javax.swing.JInternalFrame {
         tblResultado = new javax.swing.JTable();
         jLabel2 = new javax.swing.JLabel();
         btnAtivar = new javax.swing.JToggleButton();
+        cmbCategoria = new javax.swing.JComboBox<>();
+        jLabel1 = new javax.swing.JLabel();
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -109,6 +112,15 @@ public class JanelaPesquisaTorneio extends javax.swing.JInternalFrame {
             }
         });
 
+        cmbCategoria.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Categoria" }));
+        cmbCategoria.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmbCategoriaActionPerformed(evt);
+            }
+        });
+
+        jLabel1.setText("Mostrar pela categoria:");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -119,20 +131,28 @@ public class JanelaPesquisaTorneio extends javax.swing.JInternalFrame {
                 .addComponent(btnFechar, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(24, 24, 24))
             .addGroup(layout.createSequentialGroup()
-                .addGap(69, 69, 69)
-                .addComponent(jLabel2)
+                .addGap(15, 15, 15)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel1)
+                    .addComponent(jLabel2))
                 .addGap(28, 28, 28)
-                .addComponent(btnAtivar)
-                .addContainerGap(521, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(btnAtivar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(cmbCategoria, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(76, 76, 76)
+                .addGap(37, 37, 37)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(cmbCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnAtivar)
                     .addComponent(jLabel2))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 25, Short.MAX_VALUE)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 293, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(30, 30, 30)
                 .addComponent(btnFechar)
@@ -172,8 +192,8 @@ public class JanelaPesquisaTorneio extends javax.swing.JInternalFrame {
                 
             }
         } catch (Exception e) {
-//            JOptionPane.showMessageDialog(rootPane, e.getMessage());
-                e.printStackTrace();
+            JOptionPane.showMessageDialog(rootPane, e.getMessage());
+//            e.printStackTrace();
         }
     }//GEN-LAST:event_tblResultadoMousePressed
 
@@ -186,13 +206,19 @@ public class JanelaPesquisaTorneio extends javax.swing.JInternalFrame {
             tblResultado.setEnabled(false);
             btnAtivar.setText("Mouse desativado");
         }
-        System.out.println(btnAtivar.isSelected());
     }//GEN-LAST:event_btnAtivarActionPerformed
+
+    private void cmbCategoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbCategoriaActionPerformed
+        preencherTabela(cmbCategoria.getSelectedIndex()+1);
+        btnAtivar.setEnabled(true);
+    }//GEN-LAST:event_cmbCategoriaActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JToggleButton btnAtivar;
     private javax.swing.JButton btnFechar;
+    private javax.swing.JComboBox<String> cmbCategoria;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
@@ -218,13 +244,15 @@ public class JanelaPesquisaTorneio extends javax.swing.JInternalFrame {
                     Vector detalhe = new Vector<>();
                     CategoriaAbstrata.getInstance(index).getListaTorneios().forEach(torneio -> {
                         Vector<String> linha = new Vector<>();
-                        linha.add(torneio.getId()+"");
-                        linha.add(torneio.getDescricao());
-                        linha.add(torneio.getCategoria().getIdCat()+"");
-                        linha.add(torneio.getDataInicio()+"");
-                        linha.add(torneio.getDataTermino()+"");
-                        linha.add(torneio.getTaxa()+"");
-                        detalhe.add(linha);
+                        if(torneio.getCategoria().getIdCat() == index){
+                            linha.add(torneio.getId()+"");
+                            linha.add(torneio.getDescricao());
+                            linha.add(torneio.getCategoria().getIdCat()+"");
+                            linha.add(torneio.getDataInicio()+"");
+                            linha.add(torneio.getDataTermino()+"");
+                            linha.add(torneio.getTaxa()+"");
+                            detalhe.add(linha);
+                        }
                     });
                     tblResultado.setModel(new DefaultTableModel(detalhe, cabecalho));
                     break;
@@ -232,13 +260,15 @@ public class JanelaPesquisaTorneio extends javax.swing.JInternalFrame {
                     Vector detalhe2 = new Vector<>();
                     CategoriaAbstrata.getInstance(index).getListaTorneios().forEach(torneio -> {
                         Vector<String> linha = new Vector<>();
-                        linha.add(torneio.getId()+"");
-                        linha.add(torneio.getDescricao());
-                        linha.add(torneio.getCategoria().getIdCat()+"");
-                        linha.add(torneio.getDataInicio()+"");
-                        linha.add(torneio.getDataTermino()+"");
-                        linha.add(torneio.getTaxa()+"");
-                        detalhe2.add(linha);
+                        if(torneio.getCategoria().getIdCat() == index){
+                            linha.add(torneio.getId()+"");
+                            linha.add(torneio.getDescricao());
+                            linha.add(torneio.getCategoria().getIdCat()+"");
+                            linha.add(torneio.getDataInicio()+"");
+                            linha.add(torneio.getDataTermino()+"");
+                            linha.add(torneio.getTaxa()+"");
+                            detalhe2.add(linha);
+                        }
                     });
                     tblResultado.setModel(new DefaultTableModel(detalhe2, cabecalho));
                     break;
@@ -246,13 +276,15 @@ public class JanelaPesquisaTorneio extends javax.swing.JInternalFrame {
                     Vector detalhe3 = new Vector<>();
                     CategoriaAbstrata.getInstance(index).getListaTorneios().forEach(torneio -> {
                         Vector<String> linha = new Vector<>();
-                        linha.add(torneio.getId()+"");
-                        linha.add(torneio.getDescricao());
-                        linha.add(torneio.getCategoria().getIdCat()+"");
-                        linha.add(torneio.getDataInicio()+"");
-                        linha.add(torneio.getDataTermino()+"");
-                        linha.add(torneio.getTaxa()+"");
-                        detalhe3.add(linha);
+                        if(torneio.getCategoria().getIdCat() == index){
+                            linha.add(torneio.getId()+"");
+                            linha.add(torneio.getDescricao());
+                            linha.add(torneio.getCategoria().getIdCat()+"");
+                            linha.add(torneio.getDataInicio()+"");
+                            linha.add(torneio.getDataTermino()+"");
+                            linha.add(torneio.getTaxa()+"");
+                            detalhe3.add(linha);
+                        }
                     });
                     tblResultado.setModel(new DefaultTableModel(detalhe3, cabecalho));
                     break;
@@ -260,13 +292,15 @@ public class JanelaPesquisaTorneio extends javax.swing.JInternalFrame {
                     Vector detalhe4 = new Vector<>();
                     CategoriaAbstrata.getInstance(index).getListaTorneios().forEach(torneio -> {
                         Vector<String> linha = new Vector<>();
-                        linha.add(torneio.getId()+"");
-                        linha.add(torneio.getDescricao());
-                        linha.add(torneio.getCategoria().getIdCat()+"");
-                        linha.add(torneio.getDataInicio()+"");
-                        linha.add(torneio.getDataTermino()+"");
-                        linha.add(torneio.getTaxa()+"");
-                        detalhe4.add(linha);
+                        if(torneio.getCategoria().getIdCat() == index){
+                            linha.add(torneio.getId()+"");
+                            linha.add(torneio.getDescricao());
+                            linha.add(torneio.getCategoria().getIdCat()+"");
+                            linha.add(torneio.getDataInicio()+"");
+                            linha.add(torneio.getDataTermino()+"");
+                            linha.add(torneio.getTaxa()+"");
+                            detalhe4.add(linha);
+                        }
                     });
                     tblResultado.setModel(new DefaultTableModel(detalhe4, cabecalho));
                     break;
@@ -274,8 +308,19 @@ public class JanelaPesquisaTorneio extends javax.swing.JInternalFrame {
             
             
         } catch (Exception e) {
+//            e.printStackTrace();
+            JOptionPane.showMessageDialog(rootPane, e.getMessage());
+        }
+    }
+
+    @Override
+    public void popularCombo() {
+        try {
+            cmbCategoria.removeAllItems();
+            CategoriaAbstrata.getListaDeFabricas().forEach(categoria -> cmbCategoria.addItem(categoria));
+        } catch (Exception e) {
             e.printStackTrace();
-//            JOptionPane.showMessageDialog(rootPane, e.getMessage());
+            JOptionPane.showMessageDialog(rootPane, e.getMessage());
         }
     }
     

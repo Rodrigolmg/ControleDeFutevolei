@@ -9,7 +9,7 @@ import entidades.Jogador;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import observer.CBFV;
-import persistencia.JogadorDAO;
+import persistencia.PJogador;
 
 /**
  *
@@ -19,22 +19,22 @@ public class NJogador {
     
     public void incluir(Jogador jogador) throws SQLException{
         if(jogador.getId() != 0){
-            new JogadorDAO().alterar(jogador);
+            new PJogador().alterar(jogador);
         }
         else{
-            new JogadorDAO().incluir(jogador);
+            new PJogador().incluir(jogador);
         }
     }
     
     public void excluir(int codigo) throws SQLException{
-        new JogadorDAO().excluir(codigo);
+        new PJogador().excluir(codigo);
     }
     
     public Jogador consultar(int codigo) throws SQLException{
-        return new JogadorDAO().consultar(codigo);
+        return new PJogador().consultar(codigo);
     }
     
     public ArrayList<Jogador> listar() throws SQLException{
-        return new JogadorDAO().listar();
+        return new PJogador().listar();
     }
 }

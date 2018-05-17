@@ -19,7 +19,7 @@ import fabricaabstrata.CategoriaAbstrata;
  *
  * @author rodri
  */
-public class JogadorDAO {
+public class PJogador {
     
     public void incluir(Jogador jogador) throws SQLException{
         

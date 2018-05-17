@@ -5,17 +5,13 @@
  */
 package interfacergrafica;
 
-import com.sun.glass.events.KeyEvent;
+
 import javax.swing.JOptionPane;
 import entidades.Jogador;
 import fabricaabstrata.CategoriaAbstrata;
-import interfaces.Observador;
 import interfaces.PopularCombo;
-import java.util.ArrayList;
 import javax.swing.JDesktopPane;
 import negocio.NJogador;
-import observer.CBFV;
-import observer.DadosDoTorneio;
 import util.Validation;
 
 /**
@@ -39,7 +35,6 @@ public class JanelaJogadorCadastro extends javax.swing.JInternalFrame implements
     public JanelaJogadorCadastro(JDesktopPane principal){
         this();
         this.principal = principal;
-        System.out.println(JanelaPrincipal.cbfv.listarObservador().size());
     }
     
     public JanelaJogadorCadastro(JDesktopPane principal, Jogador jogador){
@@ -256,11 +251,9 @@ public class JanelaJogadorCadastro extends javax.swing.JInternalFrame implements
             
             JOptionPane.showMessageDialog(null, "Jogador cadastrado com sucesso!");
             limparTela();
-            System.out.println(JanelaPrincipal.cbfv.listarObservador().indexOf(jogador));
-            System.out.println(JanelaPrincipal.cbfv.listarObservador().size());
         } catch (Exception e) {
-//            JOptionPane.showMessageDialog(null, e.getMessage());
-            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, e.getMessage());
+//            e.printStackTrace();
         }
     }//GEN-LAST:event_btnSalvarActionPerformed
 
@@ -292,14 +285,12 @@ public class JanelaJogadorCadastro extends javax.swing.JInternalFrame implements
                 
                 new NJogador().excluir(Integer.parseInt(
                         txtIdentificador.getText()));
+                
                 JanelaPrincipal.cbfv.removerObservador(new Jogador(id, nome, categoria, cpf));
-                System.out.println(JanelaPrincipal.cbfv.listarObservador().indexOf(new Jogador(id, nome, categoria, cpf)));
+                
                 JOptionPane.showMessageDialog(null, 
                         "Operação efetuada com sucesso!");
                 
-                JanelaPrincipal.cbfv.listarObservador().forEach(observador -> {
-                    System.out.println("Jogadores excluidos: " + observador.getId());
-                });
                 limparTela();
             }
             
@@ -376,11 +367,11 @@ public class JanelaJogadorCadastro extends javax.swing.JInternalFrame implements
     public void popularCombo(){
         try {
             cmbCategoria.removeAllItems();
-            ArrayList<String> listaCat = CategoriaAbstrata.getListaDeFabricas();
             
-            listaCat.forEach(categoria -> {
+            CategoriaAbstrata.getListaDeFabricas().forEach(categoria -> {
                 cmbCategoria.addItem(categoria);
             });
+            
         } catch (Exception e) {
             e.printStackTrace();
             JOptionPane.showMessageDialog(rootPane, e.getMessage());

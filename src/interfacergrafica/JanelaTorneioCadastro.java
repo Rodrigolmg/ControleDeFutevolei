@@ -254,7 +254,7 @@ public class JanelaTorneioCadastro extends javax.swing.JInternalFrame implements
         cmbTerminoAno.setSelectedIndex(0);
         txtTaxaInscricao.setText("");
         cmbCategoria.setSelectedIndex(0);
-        txtDescricao.requestFocus();
+        cmbCategoria.setEnabled(true);
         txtCodigo.setEnabled(false);
         btnExcluir.setEnabled(false);
     }
@@ -276,7 +276,7 @@ public class JanelaTorneioCadastro extends javax.swing.JInternalFrame implements
             ArrayList<String> listS = new ArrayList<>();
             listS.add(txtDescricao.getText());
             listS.add(txtTaxaInscricao.getText());
-            Validation.isEmpty(listS);
+            //Validation.isEmpty(listS);
             
             Torneio torneio = new Torneio(cmbCategoria.getSelectedIndex()+1);
             torneio.setDescricao(txtDescricao.getText());
@@ -310,7 +310,7 @@ public class JanelaTorneioCadastro extends javax.swing.JInternalFrame implements
     private void btnFecharActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFecharActionPerformed
         // TODO add your handling code here:
         try {
-            dispose();
+            this.dispose();
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e.getMessage());
         }
@@ -322,7 +322,7 @@ public class JanelaTorneioCadastro extends javax.swing.JInternalFrame implements
         try {
             if(!txtCodigo.getText().isEmpty()){
                 int resposta = JOptionPane.showConfirmDialog(null, "Confirma a "
-                        + "exclusão do campeonato?", "Sistema de Controle de Campeonato", 
+                        + "exclusão do Torneio?", "CBFV", 
                         JOptionPane.YES_NO_OPTION);
                 if(resposta == JOptionPane.YES_OPTION){
                     new NTorneio().excluir(Integer.parseInt(txtCodigo.getText()));
@@ -413,7 +413,7 @@ public class JanelaTorneioCadastro extends javax.swing.JInternalFrame implements
             
             return new Date[]{daI, daT};
         } catch (Exception e) {
-            e.printStackTrace();
+//            e.printStackTrace();
             JOptionPane.showMessageDialog(rootPane, e.getMessage());
             return null;
         }
@@ -423,11 +423,8 @@ public class JanelaTorneioCadastro extends javax.swing.JInternalFrame implements
     public void popularCombo(){
         try {
             cmbCategoria.removeAllItems();
-            ArrayList<String> listaCat = CategoriaAbstrata.getListaDeFabricas();
             
-            listaCat.forEach(categoria -> {
-                cmbCategoria.addItem(categoria);
-            });
+            CategoriaAbstrata.getListaDeFabricas().forEach(categoria -> cmbCategoria.addItem(categoria));
             
             for (int i = 1; i <= 31; i++) {
                 cmbInicioDia.addItem(i+"");
@@ -444,7 +441,7 @@ public class JanelaTorneioCadastro extends javax.swing.JInternalFrame implements
             cmbTerminoAno.addItem(Integer.toString(i));
             }
         } catch (Exception e) {
-            e.printStackTrace();
+//            e.printStackTrace();
             JOptionPane.showMessageDialog(rootPane, e.getMessage());
         }
     }

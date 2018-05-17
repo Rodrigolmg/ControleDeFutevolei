@@ -6,9 +6,9 @@
 package entidades;
 
 import fabricaabstrata.CategoriaAbstrata;
-import interfaces.MostrarElementos;
-import interfaces.Observador;
-import interfaces.Sujeito;
+import observer.MostrarElementos;
+import observer.Observador;
+import observer.Sujeito;
 import observer.DadosDoTorneio;
 
 /**
@@ -39,6 +39,7 @@ public class Jogador implements Observador, MostrarElementos{
         this.categoria = categoria;
         this.cpf = cpf;
     }
+    
     @Override
     public int getId() {
         return id;
@@ -47,7 +48,6 @@ public class Jogador implements Observador, MostrarElementos{
     public void setId(int id) {
         this.id = id;
     }
-    
     
     public String getNome() {
         return nome;

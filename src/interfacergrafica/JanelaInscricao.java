@@ -27,8 +27,8 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import negocio.NInscricao;
 import observer.DadosDoTorneio;
-import persistencia.InscricaoDAO;
-import persistencia.JogadorDAO;
+import persistencia.PInscricao;
+import persistencia.PJogador;
 
 /**
  *
@@ -44,7 +44,6 @@ public class JanelaInscricao extends javax.swing.JInternalFrame implements Popul
     public JanelaInscricao() {
         initComponents();
         popularCombo();
-        atualizar();
     }
     
     public JanelaInscricao(JDesktopPane principal){
@@ -52,15 +51,12 @@ public class JanelaInscricao extends javax.swing.JInternalFrame implements Popul
         this.principal = principal;
     }
     
-//    public frmInscricao(JDesktopPane principal, EJogo jogo){
-//        this();
-//        this.principal = principal;
-//    }
-//    
-//    public frmInscricao(JDesktopPane principal, ECampeonato campeonato){
-//        this();
-//        this.principal = principal;
-//    }
+    public JanelaInscricao(JDesktopPane principal, Inscricao inscricao){
+        this();
+        this.principal = principal;
+        preencherTela(inscricao);
+    }
+
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -75,7 +71,7 @@ public class JanelaInscricao extends javax.swing.JInternalFrame implements Popul
         jEditorPane1 = new javax.swing.JEditorPane();
         jLabel1 = new javax.swing.JLabel();
         txtCodigoInscricao = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
+        btnPesquisarInsc = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
         cmbCategoria = new javax.swing.JComboBox<>();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -97,7 +93,7 @@ public class JanelaInscricao extends javax.swing.JInternalFrame implements Popul
         btnConfirmar = new javax.swing.JButton();
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
-        txtCodCategoria = new javax.swing.JTextField();
+        txtCodCatJogador = new javax.swing.JTextField();
         txtCpf = new javax.swing.JTextField();
         jLabel9 = new javax.swing.JLabel();
         txtCodCatTorneio = new javax.swing.JTextField();
@@ -107,6 +103,7 @@ public class JanelaInscricao extends javax.swing.JInternalFrame implements Popul
         txtDataTermino = new javax.swing.JTextField();
         jLabel12 = new javax.swing.JLabel();
         txtTaxa = new javax.swing.JTextField();
+        btnNotificar = new javax.swing.JButton();
 
         jScrollPane3.setViewportView(jEditorPane1);
 
@@ -117,7 +114,12 @@ public class JanelaInscricao extends javax.swing.JInternalFrame implements Popul
 
         txtCodigoInscricao.setEditable(false);
 
-        jButton1.setText("Pesquisar Inscrições");
+        btnPesquisarInsc.setText("Pesquisar Inscrições");
+        btnPesquisarInsc.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPesquisarInscActionPerformed(evt);
+            }
+        });
 
         jLabel2.setText("Categoria");
 
@@ -188,6 +190,7 @@ public class JanelaInscricao extends javax.swing.JInternalFrame implements Popul
         });
 
         rdExcluir.setText("Excluir");
+        rdExcluir.setEnabled(false);
         rdExcluir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 rdExcluirActionPerformed(evt);
@@ -212,7 +215,7 @@ public class JanelaInscricao extends javax.swing.JInternalFrame implements Popul
 
         jLabel8.setText("CPF");
 
-        txtCodCategoria.setEditable(false);
+        txtCodCatJogador.setEditable(false);
 
         txtCpf.setEditable(false);
 
@@ -231,6 +234,13 @@ public class JanelaInscricao extends javax.swing.JInternalFrame implements Popul
         jLabel12.setText("Taxa");
 
         txtTaxa.setEditable(false);
+
+        btnNotificar.setText("Notificar jogadores");
+        btnNotificar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnNotificarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -257,59 +267,60 @@ public class JanelaInscricao extends javax.swing.JInternalFrame implements Popul
                         .addComponent(btnConfirmar))
                     .addComponent(rdLimparCanc))
                 .addGap(121, 121, 121)
-                .addComponent(jButton1)
+                .addComponent(btnPesquisarInsc)
                 .addGap(43, 43, 43))
             .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING)
             .addComponent(jScrollPane2)
             .addGroup(layout.createSequentialGroup()
+                .addGap(28, 28, 28)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel6)
+                    .addComponent(jLabel5))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(txtDescricaoTorn, javax.swing.GroupLayout.PREFERRED_SIZE, 263, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(txtCodTorneio, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(30, 30, 30)
+                        .addComponent(jLabel9)
+                        .addGap(18, 18, 18)
+                        .addComponent(txtCodCatTorneio, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(25, 25, 25)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel11)
+                    .addComponent(jLabel10))
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(28, 28, 28)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel6)
-                            .addComponent(jLabel5))
+                        .addComponent(txtDataInicio, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(35, 35, 35)
+                        .addComponent(jLabel12)
                         .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtDescricaoTorn, javax.swing.GroupLayout.PREFERRED_SIZE, 263, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(txtCodTorneio, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(30, 30, 30)
-                                .addComponent(jLabel9)
-                                .addGap(18, 18, 18)
-                                .addComponent(txtCodCatTorneio, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(25, 25, 25)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel11)
-                            .addComponent(jLabel10))
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(txtDataInicio, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(35, 35, 35)
-                                .addComponent(jLabel12)
-                                .addGap(18, 18, 18)
-                                .addComponent(txtTaxa, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(txtDataTermino, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(22, 22, 22)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel3)
-                            .addComponent(jLabel4))
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(txtJogador, javax.swing.GroupLayout.PREFERRED_SIZE, 206, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jLabel8))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(txtCodJogador, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(156, 156, 156)
-                                .addComponent(jLabel7)))
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtCodCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtCpf, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addComponent(txtTaxa, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtDataTermino, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(22, 22, 22)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel3)
+                    .addComponent(jLabel4))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(txtJogador, javax.swing.GroupLayout.PREFERRED_SIZE, 206, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel8))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(txtCodJogador, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(156, 156, 156)
+                        .addComponent(jLabel7)))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(txtCodCatJogador, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtCpf, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnNotificar)
+                .addGap(68, 68, 68))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -335,23 +346,28 @@ public class JanelaInscricao extends javax.swing.JInternalFrame implements Popul
                                     .addComponent(btnConfirmar)))))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(23, 23, 23)
-                        .addComponent(jButton1)))
+                        .addComponent(btnPesquisarInsc)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtCodJogador, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel4)
-                    .addComponent(jLabel7)
-                    .addComponent(txtCodCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel3)
-                        .addComponent(txtJogador, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel8)
-                        .addComponent(txtCpf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(txtCodJogador, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel4)
+                            .addComponent(jLabel7)
+                            .addComponent(txtCodCatJogador, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(jLabel3)
+                                .addComponent(txtJogador, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(jLabel8)
+                                .addComponent(txtCpf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(28, 28, 28)
+                        .addComponent(btnNotificar)))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 243, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
@@ -402,7 +418,7 @@ public class JanelaInscricao extends javax.swing.JInternalFrame implements Popul
     private void btnConfirmarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConfirmarActionPerformed
         try {
             if(rdSalvar.isSelected()){
-                int codCat = Integer.parseInt(txtCodCategoria.getText());
+                int codCat = Integer.parseInt(txtCodCatJogador.getText());
                 int codJog = Integer.parseInt(txtCodJogador.getText());
                 
                 Inscricao inscricao = new Inscricao();
@@ -430,12 +446,18 @@ public class JanelaInscricao extends javax.swing.JInternalFrame implements Popul
                 
                 new NInscricao().incluir(inscricao);
                 
-                
-                
                 JOptionPane.showMessageDialog(rootPane, "Jogador inscrito com sucesso!");
                 limparTela();
             } else if (rdExcluir.isSelected()){
+                int resposta = JOptionPane.showConfirmDialog(null, 
+                    "Confirma a exclusão da inscrição?",
+                    "CBFV", JOptionPane.YES_NO_OPTION);
                 
+                if(resposta == JOptionPane.YES_OPTION){
+                    new NInscricao().excluir(Integer.parseInt(txtCodigoInscricao.getText()));
+                    JOptionPane.showMessageDialog(null, "Operação efetuada com sucesso!");
+                    limparTela();
+                }
             } else limparTela();
         } catch (Exception e) {
             e.printStackTrace();
@@ -445,9 +467,10 @@ public class JanelaInscricao extends javax.swing.JInternalFrame implements Popul
 
     private void tblJogadorMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblJogadorMousePressed
         int linha = tblJogador.getSelectedRow();
+        
         txtCodJogador.setText(tblJogador.getValueAt(linha,0).toString());
         txtJogador.setText(tblJogador.getValueAt(linha,1).toString());
-        txtCodCategoria.setText(tblJogador.getValueAt(linha,2).toString());
+        txtCodCatJogador.setText(tblJogador.getValueAt(linha,2).toString());
         txtCpf.setText(tblJogador.getValueAt(linha,3).toString());
     }//GEN-LAST:event_tblJogadorMousePressed
 
@@ -462,15 +485,33 @@ public class JanelaInscricao extends javax.swing.JInternalFrame implements Popul
         txtTaxa.setText(tblTorneio.getValueAt(linha, 5).toString());
     }//GEN-LAST:event_tblTorneioMousePressed
 
+    private void btnNotificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNotificarActionPerformed
+        atualizar();
+    }//GEN-LAST:event_btnNotificarActionPerformed
+
+    private void btnPesquisarInscActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPesquisarInscActionPerformed
+        try {
+            JanelaPesquisaInscricao janela = new JanelaPesquisaInscricao(principal);
+            principal.add(janela);
+            janela.setVisible(true);
+            this.dispose();
+        } catch (Exception e) {
+//            e.printStackTrace();
+            JOptionPane.showMessageDialog(rootPane, e.getMessage());
+        }
+    }//GEN-LAST:event_btnPesquisarInscActionPerformed
+
     private void limparTela(){
+        rdExcluir.setEnabled(false);
         txtCodigoInscricao.setText("");
         cmbCategoria.setSelectedIndex(0);
+        cmbCategoria.setEnabled(true);
         rdSalvar.setSelected(false);
         rdExcluir.setSelected(false);
         rdLimparCanc.setSelected(false);
         txtCodJogador.setText("");
         txtJogador.setText("");
-        txtCodCategoria.setText("");
+        txtCodCatJogador.setText("");
         txtCpf.setText("");
         txtCodTorneio.setText("");
         txtCodCatTorneio.setText("");
@@ -483,8 +524,9 @@ public class JanelaInscricao extends javax.swing.JInternalFrame implements Popul
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnConfirmar;
+    private javax.swing.JButton btnNotificar;
+    private javax.swing.JButton btnPesquisarInsc;
     private javax.swing.JComboBox<String> cmbCategoria;
-    private javax.swing.JButton jButton1;
     private javax.swing.JEditorPane jEditorPane1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
@@ -507,8 +549,8 @@ public class JanelaInscricao extends javax.swing.JInternalFrame implements Popul
     private javax.swing.JRadioButton rdSalvar;
     private javax.swing.JTable tblJogador;
     private javax.swing.JTable tblTorneio;
+    private javax.swing.JTextField txtCodCatJogador;
     private javax.swing.JTextField txtCodCatTorneio;
-    private javax.swing.JTextField txtCodCategoria;
     private javax.swing.JTextField txtCodJogador;
     private javax.swing.JTextField txtCodTorneio;
     private javax.swing.JTextField txtCodigoInscricao;
@@ -524,12 +566,9 @@ public class JanelaInscricao extends javax.swing.JInternalFrame implements Popul
     public void popularCombo() {
         try {
             cmbCategoria.removeAllItems();
-            ArrayList<String> listaCat = CategoriaAbstrata.getListaDeFabricas();
-            listaCat.forEach(categoria -> {
-                cmbCategoria.addItem(categoria);
-            });
+            CategoriaAbstrata.getListaDeFabricas().forEach(categoria -> cmbCategoria.addItem(categoria));
         } catch (Exception e) {
-            e.printStackTrace();
+//            e.printStackTrace();
             JOptionPane.showMessageDialog(rootPane, e.getMessage());
         }
     }
@@ -652,6 +691,25 @@ public class JanelaInscricao extends javax.swing.JInternalFrame implements Popul
         
     }
     
+    private void preencherTela(Inscricao inscricao){
+        rdExcluir.setEnabled(true);
+        
+        txtCodigoInscricao.setText(Integer.toString(inscricao.getIdInscricao()));
+        cmbCategoria.setSelectedItem(inscricao.getJogador().getCategoria().getDescricao());
+        cmbCategoria.setEnabled(false);
+        txtCodJogador.setText(Integer.toString(inscricao.getJogador().getId()));
+        txtJogador.setText(inscricao.getJogador().getNome());
+        txtCodCatJogador.setText(Integer.toString(inscricao.getJogador().getCategoria().getIdCat()));
+        txtCpf.setText(inscricao.getJogador().getCpf());
+        
+        txtCodTorneio.setText(Integer.toString(inscricao.getTorneio().getId()));
+        txtDescricaoTorn.setText(inscricao.getTorneio().getDescricao());
+        txtCodTorneio.setText(Integer.toString(inscricao.getTorneio().getCategoria().getIdCat()));
+        txtDataInicio.setText(inscricao.getTorneio().getDataInicio().toString());
+        txtDataTermino.setText(inscricao.getTorneio().getDataTermino().toString());
+        txtTaxa.setText(Double.toString(inscricao.getTorneio().getTaxa()));
+    }
+    
     private Vector<String> tabelaJogador(){
             Vector<String> cabecalho = new Vector<>();
             cabecalho.add("Código");
@@ -677,10 +735,7 @@ public class JanelaInscricao extends javax.swing.JInternalFrame implements Popul
     private void atualizar(){
         try {
             java.sql.Date data = java.sql.Date.valueOf(LocalDate.now());
-            ArrayList<Inscricao> list = new InscricaoDAO().listar();
-            list.forEach(inscricao -> {
-                cbfv.setDados(new DadosDoTorneio(inscricao, data));
-            });
+            new PInscricao().listar().forEach(inscricao -> cbfv.setDados(new DadosDoTorneio(inscricao, data)));
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e.getMessage());
         }

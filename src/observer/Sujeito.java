@@ -3,9 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package interfaces;
+package observer;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -15,5 +16,5 @@ public interface Sujeito {
     public void incluirObservador(Observador o);
     public void removerObservador(Observador o);
     public void notificarObservador();
-    public ArrayList listarObservador();
+    public List listarObservador();
 }
