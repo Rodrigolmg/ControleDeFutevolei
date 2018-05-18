@@ -39,6 +39,11 @@ public class Jogador implements Observador, MostrarElementos{
         this.categoria = categoria;
         this.cpf = cpf;
     }
+    
+    @Override
+    public int getId() {
+        return id;
+    }
 
     public void setId(int id) {
         this.id = id;
@@ -66,11 +71,6 @@ public class Jogador implements Observador, MostrarElementos{
 
     public void setCpf(String cpf) {
         this.cpf = cpf;
-    }
-    
-    @Override
-    public int getId() {
-        return id;
     }
 
     @Override

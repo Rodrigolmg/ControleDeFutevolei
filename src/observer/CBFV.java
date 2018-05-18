@@ -29,7 +29,7 @@ public class CBFV implements Sujeito{
     @Override
     public void removerObservador(Observador o) {
         observers.forEach(observador -> {
-            if(o.getId() == observador.getId())
+            if(o.getId() == observador.getId() && observers.size() > 0)
                 observers.remove(o);
         });
     }

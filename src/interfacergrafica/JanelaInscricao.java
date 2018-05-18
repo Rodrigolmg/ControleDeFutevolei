@@ -12,12 +12,15 @@ import entidades.Torneio;
 import fabricaabstrata.CategoriaAbstrata;
 import static interfacergrafica.JanelaPrincipal.cbfv;
 import interfaces.PopularCombo;
+import java.sql.Time;
 import java.text.DateFormat;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.Vector;
 import javax.swing.JDesktopPane;
 import javax.swing.JOptionPane;
@@ -25,7 +28,7 @@ import javax.swing.table.DefaultTableModel;
 import negocio.NInscricao;
 import observer.DadosDoTorneio;
 import persistencia.PInscricao;
-import util.Validation;
+import persistencia.PJogador;
 
 /**
  *
@@ -33,6 +36,7 @@ import util.Validation;
  */
 public class JanelaInscricao extends javax.swing.JInternalFrame implements PopularCombo{
     private JDesktopPane principal;
+    Calendar data = Calendar.getInstance();
 
     /**
      * Creates new form frmTipoAssociadoCadoastr
@@ -50,7 +54,7 @@ public class JanelaInscricao extends javax.swing.JInternalFrame implements Popul
     public JanelaInscricao(JDesktopPane principal, Inscricao inscricao){
         this();
         this.principal = principal;
-        preencherCampos(inscricao);
+        preencherTela(inscricao);
     }
 
 
@@ -414,7 +418,6 @@ public class JanelaInscricao extends javax.swing.JInternalFrame implements Popul
     private void btnConfirmarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConfirmarActionPerformed
         try {
             if(rdSalvar.isSelected()){
-                Validation.isEmpty(validarCampos());
                 int codCat = Integer.parseInt(txtCodCatJogador.getText());
                 int codJog = Integer.parseInt(txtCodJogador.getText());
                 
@@ -688,7 +691,7 @@ public class JanelaInscricao extends javax.swing.JInternalFrame implements Popul
         
     }
     
-    private void preencherCampos(Inscricao inscricao){
+    private void preencherTela(Inscricao inscricao){
         rdExcluir.setEnabled(true);
         
         txtCodigoInscricao.setText(Integer.toString(inscricao.getIdInscricao()));
@@ -736,22 +739,5 @@ public class JanelaInscricao extends javax.swing.JInternalFrame implements Popul
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e.getMessage());
         }
-    }
-    
-    private ArrayList<String> validarCampos(){
-        ArrayList<String> lista = new ArrayList<>();
-        
-        lista.add(txtCodJogador.getText());
-        lista.add(txtJogador.getText());
-        lista.add(txtCodCatJogador.getText());
-        lista.add(txtCpf.getText());
-        lista.add(txtCodTorneio.getText());
-        lista.add(txtDescricaoTorn.getText());
-        lista.add(txtCodCatTorneio.getText());
-        lista.add(txtDataInicio.getText());
-        lista.add(txtDataTermino.getText());
-        lista.add(txtTaxa.getText());
-        
-        return lista;
     }
 }

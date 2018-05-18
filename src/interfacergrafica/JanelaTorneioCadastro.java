@@ -262,10 +262,6 @@ public class JanelaTorneioCadastro extends javax.swing.JInternalFrame implements
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
         // TODO add your handling code here:
         try {
-            Validation.isEmpty(validarCampos());
-            Validation.invalidSpaces(txtTaxaInscricao.getText());
-            Validation.invalidCaracters(txtTaxaInscricao.getText());
-            
             int inicioDia = cmbInicioDia.getSelectedIndex();
             int inicioMes = cmbInicioMes.getSelectedIndex();
             
@@ -477,14 +473,5 @@ public class JanelaTorneioCadastro extends javax.swing.JInternalFrame implements
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e.getMessage());
         }
-    }
-    
-    private ArrayList<String> validarCampos(){
-        ArrayList<String> lista = new ArrayList<>();
-        
-        lista.add(txtDescricao.getText());
-        lista.add(txtTaxaInscricao.getText());
-        
-        return lista;
     }
 }

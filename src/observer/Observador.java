@@ -10,7 +10,7 @@ import entidades.Jogador;
 import observer.DadosDoTorneio;
 
 
-public interface Observador {
+public interface Observador {//OK
     public void atualizar(DadosDoTorneio dados);
     public int getId();
 }
