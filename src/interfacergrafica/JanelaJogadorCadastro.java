@@ -10,6 +10,7 @@ import javax.swing.JOptionPane;
 import entidades.Jogador;
 import fabricaabstrata.CategoriaAbstrata;
 import interfaces.PopularCombo;
+import java.util.ArrayList;
 import javax.swing.JDesktopPane;
 import negocio.NJogador;
 import util.Validation;
@@ -237,6 +238,9 @@ public class JanelaJogadorCadastro extends javax.swing.JInternalFrame implements
 
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
         try {
+            Validation.isEmpty(validarCampos());
+            Validation.invalidCaracAndLetters(txtCpf.getText());
+            Validation.invalidSpaces(txtCpf.getText());
             
             Jogador jogador = new Jogador(JanelaPrincipal.cbfv);
             jogador.setNome(txtNome.getText());
@@ -376,5 +380,14 @@ public class JanelaJogadorCadastro extends javax.swing.JInternalFrame implements
             e.printStackTrace();
             JOptionPane.showMessageDialog(rootPane, e.getMessage());
         }
+    }
+    
+    private ArrayList<String> validarCampos(){
+        ArrayList<String> lista = new ArrayList<>();
+        
+        lista.add(txtNome.getText());
+        lista.add(txtCpf.getText());
+        
+        return lista;
     }
 }
