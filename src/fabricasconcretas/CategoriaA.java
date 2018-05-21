@@ -26,7 +26,7 @@ public class CategoriaA extends CategoriaAbstrata{
     @Override
     public ArrayList<Jogador> getListaJogadores() {
         try {
-            return new PJogador().listarNomes(idCat);
+            return new PJogador().listarDescricao(idCat);
         } catch (Exception e) {
             return null;
         }

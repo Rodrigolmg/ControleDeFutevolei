@@ -19,31 +19,33 @@ import fabricaabstrata.CategoriaAbstrata;
  *
  * @author rodri
  */
-public class PJogador {
+public class PJogador extends TPersistencia<Jogador> {
     
     public void incluir(Jogador jogador) throws SQLException{
         
         String sql = "INSERT INTO jogador(nome, categoria, cpf)"
                 + " VALUES(?, ?, ?);";
         
-        Connection cnn = util.Conexao.getConexao();
-
+        String sql2 = "SELECT currval('jogador_id_seq') as identificador";
+        
+        this.alterarOuIncluir(jogador, sql, sql2);
+    }
+    
+    @Override
+    public PreparedStatement prepararEstado(Jogador jogador, Connection cnn, String sql) throws SQLException {
         PreparedStatement prd = cnn.prepareStatement(sql);
-
+        
+        //Seta os valores a serem injetados no código
         prd.setString(1, jogador.getNome());
         prd.setInt(2, jogador.getCategoria().getIdCat());
         prd.setString(3, jogador.getCpf());
+        if(jogador.getId() > 0)
+            prd.setInt(4, jogador.getId());
         
-        prd.execute();
-        
-        String sql2 = "SELECT currval('jogador_id_seq') as id";
-        Statement stm = cnn.createStatement();
-        ResultSet rs = stm.executeQuery(sql2);
-        if (rs.next()) {
-            jogador.setId(rs.getInt("id"));
-        }
+        return prd;
     }
     
+    @Override
     public Jogador consultar(int id) throws SQLException{
         String sql = "SELECT * FROM jogador WHERE id = ?;";
         
@@ -66,22 +68,10 @@ public class PJogador {
         //Cria o SQL aser executado
         String sql = "UPDATE jogador SET nome = ? , categoria = ?, cpf = ? WHERE id = ?;";
         
-        //Cria a conexão com o banco a partir da classe utilitária
-        Connection cnn = util.Conexao.getConexao();
-        
-        //Cria o procedimento armazenado a partir do sql gerado
-        PreparedStatement prd = cnn.prepareStatement(sql);
-        
-        //Seta os valores a serem injetados no código
-        prd.setString(1, jogador.getNome());
-        prd.setInt(2, jogador.getCategoria().getIdCat());
-        prd.setString(3, jogador.getCpf());
-        prd.setInt(4, jogador.getId());
-        
-        //Executa 
-        prd.execute();
+        this.alterarOuIncluir(jogador, sql);
     }
     
+    @Override
     public void excluir(int id) throws SQLException{
         
         String sql = "DELETE FROM jogador WHERE id = ?";
@@ -95,6 +85,7 @@ public class PJogador {
         prd.execute();
     }
     
+    @Override
     public ArrayList<Jogador> listar() throws SQLException{
         
         String sql = "SELECT * FROM jogador ORDER BY id;";
@@ -112,7 +103,8 @@ public class PJogador {
         return lista;
     }
     
-    public ArrayList<Jogador> listarNomes(int idCategoria) throws SQLException{
+    @Override
+    public ArrayList<Jogador> listarDescricao(int idCategoria) throws SQLException{
         
         String sql = "SELECT * FROM jogador WHERE categoria = ? ORDER BY id;";
         
@@ -130,4 +122,8 @@ public class PJogador {
         
         return lista;
     }
+
+    
+
+    
 }
