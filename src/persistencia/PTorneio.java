@@ -19,33 +19,50 @@ import java.util.ArrayList;
  *
  * @author rodri
  */
-public class PTorneio {
+public class PTorneio extends TPersistencia<Torneio>{
+    
     public void incluir(Torneio torneio) throws SQLException{
         
         String sql = "INSERT INTO torneio(descricao_torn, categoria, data_ini,"
                 + " data_term, taxa)"
                 + " VALUES(?, ?, ?, ?, ?);";
         
-        Connection cnn = util.Conexao.getConexao();
+        String sql2 = "SELECT currval('torneio_id_torneio_seq') as identificador";
+        
+        this.alterarOuIncluir(torneio, sql, sql2);
+    }
+    
+    public void alterar(Torneio torneio) throws SQLException {
 
+        //Cria o SQL aser executado
+        String sql = "UPDATE torneio SET"
+                + " descricao_torn = ?,"
+                + " categoria = ?,"
+                + " data_ini = ?,"
+                + " data_term = ?"
+                + " taxa = ?"
+                + " WHERE id_torneio = ?;";
+
+        this.alterarOuIncluir(torneio, sql);
+    }
+    
+    @Override
+    public PreparedStatement prepararDeclaracao(Torneio torneio, Connection cnn, String sql) throws SQLException{
         PreparedStatement prd = cnn.prepareStatement(sql);
 
+        
         prd.setString(1, torneio.getDescricao());
         prd.setInt(2, torneio.getCategoria().getIdCat());
         prd.setDate(3, torneio.getDataInicio());
         prd.setDate(4, torneio.getDataTermino());
         prd.setDouble(5, torneio.getTaxa());
+        if(torneio.getId() > 0)
+            prd.setInt(6, torneio.getId());
         
-        prd.execute();
-        
-        String sql2 = "SELECT currval('torneio_id_torneio_seq') as id_torneio";
-        Statement stm = cnn.createStatement();
-        ResultSet rs = stm.executeQuery(sql2);
-        if (rs.next()) {
-            torneio.setId(rs.getInt("id_torneio"));
-        }
+        return prd;
     }
     
+    @Override
     public Torneio consultar(int id) throws SQLException{
         String sql = "SELECT * FROM torneio WHERE id_torneio = ?;";
         
@@ -64,35 +81,7 @@ public class PTorneio {
         
     }
     
-    public void alterar(Torneio torneio) throws SQLException {
-
-        //Cria o SQL aser executado
-        String sql = "UPDATE torneio SET"
-                + " descricao_torn = ?,"
-                + " categoria = ?,"
-                + " data_ini = ?,"
-                + " data_term = ?"
-                + " taxa = ?"
-                + " WHERE id_torneio = ?;";
-
-        //Cria a conexão com o banco a partir da classe utilitária
-        Connection cnn = util.Conexao.getConexao();
-
-        //Cria o procedimento armazenado a partir do sql gerado
-        PreparedStatement prd = cnn.prepareStatement(sql);
-
-        //Seta os valores a serem injetados no código
-        prd.setString(1, torneio.getDescricao());
-        prd.setInt(2, torneio.getCategoria().getIdCat());
-        prd.setDate(3, torneio.getDataInicio());
-        prd.setDate(4, torneio.getDataTermino());
-        prd.setDouble(5, torneio.getTaxa());
-        prd.setInt(6, torneio.getId());
-
-        //Executa 
-        prd.execute();
-    }
-    
+    @Override
     public void excluir(int id) throws SQLException{
         
         String sql = "DELETE FROM torneio WHERE id_torneio = ?";
@@ -106,6 +95,7 @@ public class PTorneio {
         prd.execute();
     }
     
+    @Override
     public ArrayList<Torneio> listar() throws SQLException{
         
         String sql = "SELECT * FROM torneio ORDER BY id_torneio;";
@@ -124,6 +114,7 @@ public class PTorneio {
         return lista;
     }
     
+    @Override
     public ArrayList<Torneio> listarDescricao(int idCategoria) throws SQLException{
         
         String sql = "SELECT * FROM torneio WHERE categoria = ? ORDER BY id_torneio;";

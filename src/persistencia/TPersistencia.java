@@ -14,8 +14,15 @@ import java.sql.Statement;
 import java.util.ArrayList;
 
 /**
- *
- * @author Usuário
+ * Classe Template para persistências das classes: 
+ * 
+ * <ul>
+ *  <li>Inscricao</li>
+ *  <li>Jogador</li>
+ *  <li>Torneio</li>
+ * </ul>
+ * 
+ * @author Rodrigo Leite
  */
 public abstract class TPersistencia<T>{
     
@@ -25,7 +32,7 @@ public abstract class TPersistencia<T>{
     public abstract ArrayList<T> listar() throws SQLException;
     public abstract ArrayList<T> listarDescricao(int id) throws SQLException;
 
-    public abstract PreparedStatement prepararEstado(T obj, Connection cnn, String sql) throws SQLException;
+    public abstract PreparedStatement prepararDeclaracao(T obj, Connection cnn, String sql) throws SQLException;
     
     public void alterarOuIncluir(T obj, String... sql) throws SQLException{
         
@@ -33,11 +40,10 @@ public abstract class TPersistencia<T>{
         
         Connection cnn = util.Conexao.getConexao();
 
-        PreparedStatement prd = prepararEstado(obj, cnn, sql2);
+        PreparedStatement prd = prepararDeclaracao(obj, cnn, sql2);
         
         prd.execute();
         
-                
         if(sql.length > 1){
             String sql3 = sql[1];
             Statement stm = cnn.createStatement();

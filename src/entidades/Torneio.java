@@ -6,13 +6,14 @@
 package entidades;
 
 import fabricaabstrata.CategoriaAbstrata;
+import interfaces.Identificador;
 import java.sql.Date;
 
 /**
  *
  * @author rodri
  */
-public class Torneio {
+public class Torneio implements Identificador{
     
     private int id;
     private String descricao;
@@ -38,7 +39,8 @@ public class Torneio {
     public int getId() {
         return id;
     }
-
+    
+    @Override
     public void setId(int id) {
         this.id = id;
     }

@@ -5,6 +5,7 @@
  */
 package testes;
 
+import fabricaabstrata.CategoriaAbstrata;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
@@ -15,6 +16,7 @@ import org.joda.time.DateTime;
 import org.joda.time.Days;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
+import persistencia.PCategoria;
 
 /**
  *
@@ -23,13 +25,22 @@ import org.joda.time.format.DateTimeFormatter;
 public class Teste {
     public static void main(String[] args) {
         try {
-            String d = "10/06/2018";
-            DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
-            Date test4 = df.parse(d);
             
-            java.sql.Date test5 = new java.sql.Date(test4.getTime());
+            PCategoria teste = new PCategoria();
             
-            System.out.println(df.format(test5));
+            CategoriaAbstrata a;
+            
+            a = teste.consultar(1);
+            
+            System.out.println(a.getDescricao());
+            
+//            String d = "10/06/2018";
+//            DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+//            Date test4 = df.parse(d);
+//            
+//            java.sql.Date test5 = new java.sql.Date(test4.getTime());
+//            
+//            System.out.println(df.format(test5));
             
 //            java.sql.Date data = java.sql.Date.valueOf(LocalDate.now());
 //            DateTime test = new DateTime(data);

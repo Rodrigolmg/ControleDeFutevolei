@@ -17,29 +17,29 @@ import java.util.ArrayList;
  *
  * @author rodri
  */
-public class PInscricao {
+public class PInscricao extends TPersistencia<Inscricao>{
     public void incluir(Inscricao inscricao) throws SQLException{
         
         String sql = "INSERT INTO inscricao(torneio, jogador)"
                 + " VALUES(?, ?);";
         
-        Connection cnn = util.Conexao.getConexao();
-
+        String sql2 = "SELECT currval('inscricao_id_inscricao_seq') as identificador";
+        
+        this.alterarOuIncluir(inscricao, sql, sql2);
+    }
+    
+    @Override
+    public PreparedStatement prepararDeclaracao(Inscricao inscricao, Connection cnn, String sql) throws SQLException {
+        
         PreparedStatement prd = cnn.prepareStatement(sql);
-
+        
         prd.setInt(1, inscricao.getTorneio().getId());
         prd.setInt(2, inscricao.getJogador().getId());
         
-        prd.execute();
-        
-        String sql2 = "SELECT currval('inscricao_id_inscricao_seq') as id_inscricao";
-        Statement stm = cnn.createStatement();
-        ResultSet rs = stm.executeQuery(sql2);
-        if (rs.next()) {
-            inscricao.setIdInscricao(rs.getInt("id_inscricao"));
-        }
+        return prd;
     }
     
+    @Override
     public Inscricao consultar(int id) throws SQLException{
         String sql = "SELECT * FROM inscricao WHERE id_inscricao = ?;";
         
@@ -58,27 +58,7 @@ public class PInscricao {
         
     }
     
-//    public void alterar(Inscricao inscricao) throws SQLException{
-//        
-//        //Cria o SQL aser executado
-//        String sql = "UPDATE inscricao SET torneio = ?, categoria = ?, cpf = ? WHERE id = ?;";
-//        
-//        //Cria a conexão com o banco a partir da classe utilitária
-//        Connection cnn = util.Conexao.getConexao();
-//        
-//        //Cria o procedimento armazenado a partir do sql gerado
-//        PreparedStatement prd = cnn.prepareStatement(sql);
-//        
-//        //Seta os valores a serem injetados no código
-//        prd.setString(1, inscricao.getNome());
-//        prd.setInt(2, inscricao.getCategoria().getIdCat());
-//        prd.setString(3, inscricao.getCpf());
-//        prd.setInt(4, inscricao.getId());
-//        
-//        //Executa 
-//        prd.execute();
-//    }
-    
+    @Override
     public void excluir(int id) throws SQLException{
         
         String sql = "DELETE FROM inscricao WHERE id_inscricao = ?";
@@ -92,6 +72,7 @@ public class PInscricao {
         prd.execute();
     }
     
+    @Override
     public ArrayList<Inscricao> listar() throws SQLException{
         
         String sql = "SELECT * FROM inscricao ORDER BY id_inscricao;";
@@ -109,4 +90,11 @@ public class PInscricao {
         }
         return lista;
     }
+
+    @Override
+    public ArrayList<Inscricao> listarDescricao(int id) throws SQLException {
+        return null;
+    }
+
+    
 }

@@ -31,14 +31,23 @@ public class PJogador extends TPersistencia<Jogador> {
         this.alterarOuIncluir(jogador, sql, sql2);
     }
     
+    public void alterar(Jogador jogador) throws SQLException{
+        
+        
+        String sql = "UPDATE jogador SET nome = ? , categoria = ?, cpf = ? WHERE id = ?;";
+        
+        this.alterarOuIncluir(jogador, sql);
+    }
+    
     @Override
-    public PreparedStatement prepararEstado(Jogador jogador, Connection cnn, String sql) throws SQLException {
+    public PreparedStatement prepararDeclaracao(Jogador jogador, Connection cnn, String sql) throws SQLException {
         PreparedStatement prd = cnn.prepareStatement(sql);
         
-        //Seta os valores a serem injetados no código
+        
         prd.setString(1, jogador.getNome());
         prd.setInt(2, jogador.getCategoria().getIdCat());
         prd.setString(3, jogador.getCpf());
+        
         if(jogador.getId() > 0)
             prd.setInt(4, jogador.getId());
         
@@ -63,13 +72,6 @@ public class PJogador extends TPersistencia<Jogador> {
         
     }
     
-    public void alterar(Jogador jogador) throws SQLException{
-        
-        //Cria o SQL aser executado
-        String sql = "UPDATE jogador SET nome = ? , categoria = ?, cpf = ? WHERE id = ?;";
-        
-        this.alterarOuIncluir(jogador, sql);
-    }
     
     @Override
     public void excluir(int id) throws SQLException{
