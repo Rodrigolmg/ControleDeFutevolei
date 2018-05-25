@@ -5,11 +5,13 @@
  */
 package entidades;
 
+import interfaces.Identificador;
+
 /**
  *
  * @author rodri
  */
-public class Inscricao {
+public class Inscricao implements Identificador{
     
     private int idInscricao;
     private Torneio torneio;
@@ -27,8 +29,9 @@ public class Inscricao {
     public int getIdInscricao() {
         return idInscricao;
     }
-
-    public void setIdInscricao(int idInscricao) {
+    
+    @Override
+    public void setId(int idInscricao) {
         this.idInscricao = idInscricao;
     }
 

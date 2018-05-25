@@ -209,7 +209,7 @@ public class JanelaPesquisaTorneio extends javax.swing.JInternalFrame implements
     }//GEN-LAST:event_btnAtivarActionPerformed
 
     private void cmbCategoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbCategoriaActionPerformed
-        preencherTabela(cmbCategoria.getSelectedIndex()+1);
+        preencherTabela(cmbCategoria.getSelectedIndex());
         btnAtivar.setEnabled(true);
     }//GEN-LAST:event_cmbCategoriaActionPerformed
 
@@ -240,7 +240,7 @@ public class JanelaPesquisaTorneio extends javax.swing.JInternalFrame implements
             cabecalho.add("Taxa");
             
             switch(index){
-                case 1: 
+                case 0: 
                     Vector detalhe = new Vector<>();
                     CategoriaAbstrata.getInstance(index).getListaTorneios().forEach(torneio -> {
                         Vector<String> linha = new Vector<>();
@@ -256,7 +256,7 @@ public class JanelaPesquisaTorneio extends javax.swing.JInternalFrame implements
                     });
                     tblResultado.setModel(new DefaultTableModel(detalhe, cabecalho));
                     break;
-                case 2: 
+                case 1: 
                     Vector detalhe2 = new Vector<>();
                     CategoriaAbstrata.getInstance(index).getListaTorneios().forEach(torneio -> {
                         Vector<String> linha = new Vector<>();
@@ -272,7 +272,7 @@ public class JanelaPesquisaTorneio extends javax.swing.JInternalFrame implements
                     });
                     tblResultado.setModel(new DefaultTableModel(detalhe2, cabecalho));
                     break;
-                case 3: 
+                case 2: 
                     Vector detalhe3 = new Vector<>();
                     CategoriaAbstrata.getInstance(index).getListaTorneios().forEach(torneio -> {
                         Vector<String> linha = new Vector<>();
@@ -288,7 +288,7 @@ public class JanelaPesquisaTorneio extends javax.swing.JInternalFrame implements
                     });
                     tblResultado.setModel(new DefaultTableModel(detalhe3, cabecalho));
                     break;
-                case 4: 
+                case 3: 
                     Vector detalhe4 = new Vector<>();
                     CategoriaAbstrata.getInstance(index).getListaTorneios().forEach(torneio -> {
                         Vector<String> linha = new Vector<>();

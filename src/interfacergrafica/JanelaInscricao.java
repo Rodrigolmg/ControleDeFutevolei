@@ -390,7 +390,7 @@ public class JanelaInscricao extends javax.swing.JInternalFrame implements Popul
     }// </editor-fold>//GEN-END:initComponents
 
     private void cmbCategoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbCategoriaActionPerformed
-        preencherTabela(cmbCategoria.getSelectedIndex()+1);
+        preencherTabela(cmbCategoria.getSelectedIndex());
     }//GEN-LAST:event_cmbCategoriaActionPerformed
 
     private void rdSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rdSalvarActionPerformed
@@ -438,7 +438,7 @@ public class JanelaInscricao extends javax.swing.JInternalFrame implements Popul
                         dateI, dateT, Double.parseDouble(txtTaxa.getText())));
                 
                 if(txtCodigoInscricao.getText() != null && !txtCodigoInscricao.getText().isEmpty()){
-                    inscricao.setIdInscricao(Integer.parseInt(txtCodigoInscricao.getText()));
+                    inscricao.setId(Integer.parseInt(txtCodigoInscricao.getText()));
                 }
                 
                 new NInscricao().incluir(inscricao);
@@ -576,6 +576,32 @@ public class JanelaInscricao extends javax.swing.JInternalFrame implements Popul
             Vector detalheJog = new Vector<>();
             Vector detalheTor = new Vector<>();
             switch(index){
+                case 0:
+                    //Tabela do Jogador
+                    detalheJog.removeAllElements();
+                    CategoriaAbstrata.getInstance(index).getListaJogadores().forEach(jogador -> {
+                        Vector<String> linha = new Vector<>();
+                        linha.add(jogador.getId()+"");
+                        linha.add(jogador.getNome());
+                        linha.add(jogador.getCategoria().getIdCat()+"");
+                        linha.add(jogador.getCpf());
+                        detalheJog.add(linha);
+                    });
+                    tblJogador.setModel(new DefaultTableModel(detalheJog, tabelaJogador()));
+                    //Tabela do Torneio
+                    detalheTor.removeAllElements();
+                    CategoriaAbstrata.getInstance(index).getListaTorneios().forEach(torneio ->{
+                        Vector<String> linhaT = new Vector<>();
+                        linhaT.add(torneio.getId()+"");
+                        linhaT.add(torneio.getDescricao());
+                        linhaT.add(torneio.getCategoria().getIdCat()+"");
+                        linhaT.add(torneio.getDataInicio()+"");
+                        linhaT.add(torneio.getDataTermino()+"");
+                        linhaT.add(formato.format(torneio.getTaxa()) +"");
+                        detalheTor.add(linhaT);
+                    });
+                    tblTorneio.setModel(new DefaultTableModel(detalheTor, tabelaTorneio()));
+                    break;
                 case 1:
                     //Tabela do Jogador
                     detalheJog.removeAllElements();
@@ -602,7 +628,7 @@ public class JanelaInscricao extends javax.swing.JInternalFrame implements Popul
                     });
                     tblTorneio.setModel(new DefaultTableModel(detalheTor, tabelaTorneio()));
                     break;
-                case 2:
+                case 2: 
                     //Tabela do Jogador
                     detalheJog.removeAllElements();
                     CategoriaAbstrata.getInstance(index).getListaJogadores().forEach(jogador -> {
@@ -628,33 +654,7 @@ public class JanelaInscricao extends javax.swing.JInternalFrame implements Popul
                     });
                     tblTorneio.setModel(new DefaultTableModel(detalheTor, tabelaTorneio()));
                     break;
-                case 3: 
-                    //Tabela do Jogador
-                    detalheJog.removeAllElements();
-                    CategoriaAbstrata.getInstance(index).getListaJogadores().forEach(jogador -> {
-                        Vector<String> linha = new Vector<>();
-                        linha.add(jogador.getId()+"");
-                        linha.add(jogador.getNome());
-                        linha.add(jogador.getCategoria().getIdCat()+"");
-                        linha.add(jogador.getCpf());
-                        detalheJog.add(linha);
-                    });
-                    tblJogador.setModel(new DefaultTableModel(detalheJog, tabelaJogador()));
-                    //Tabela do Torneio
-                    detalheTor.removeAllElements();
-                    CategoriaAbstrata.getInstance(index).getListaTorneios().forEach(torneio ->{
-                        Vector<String> linhaT = new Vector<>();
-                        linhaT.add(torneio.getId()+"");
-                        linhaT.add(torneio.getDescricao());
-                        linhaT.add(torneio.getCategoria().getIdCat()+"");
-                        linhaT.add(torneio.getDataInicio()+"");
-                        linhaT.add(torneio.getDataTermino()+"");
-                        linhaT.add(formato.format(torneio.getTaxa()) +"");
-                        detalheTor.add(linhaT);
-                    });
-                    tblTorneio.setModel(new DefaultTableModel(detalheTor, tabelaTorneio()));
-                    break;
-                case 4:
+                case 3:
                     //Tabela do Jogador
                     detalheJog.removeAllElements();
                     CategoriaAbstrata.getInstance(index).getListaJogadores().forEach(jogador -> {

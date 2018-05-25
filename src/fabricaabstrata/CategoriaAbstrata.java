@@ -6,14 +6,10 @@
 package fabricaabstrata;
 
 
-import fabricasconcretas.CategoriaA;
-import entidades.Jogador;
+
 import entidades.Jogador;
 import entidades.Torneio;
-import entidades.Torneio;
-import fabricasconcretas.CategoriaB;
-import fabricasconcretas.CategoriaC;
-import fabricasconcretas.CategoriaIniciante;
+import fabricasconcretas.SCategoria;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import persistencia.PCategoria;
@@ -37,12 +33,6 @@ public abstract class CategoriaAbstrata {
     public abstract ArrayList<Jogador> getListaJogadores();
     public abstract ArrayList<Torneio> getListaTorneios();
     public static CategoriaAbstrata getInstance(int categoria){
-        switch(categoria){
-            case 1: return new CategoriaA();
-            case 2: return new CategoriaB();
-            case 3: return new CategoriaC();
-            case 4: return new CategoriaIniciante();
-            default: return null;
-        }
+        return SCategoria.values()[categoria].getInstance();
     }
 }

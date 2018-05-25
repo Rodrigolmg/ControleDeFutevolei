@@ -372,9 +372,7 @@ public class JanelaJogadorCadastro extends javax.swing.JInternalFrame implements
         try {
             cmbCategoria.removeAllItems();
             
-            CategoriaAbstrata.getListaDeFabricas().forEach(categoria -> {
-                cmbCategoria.addItem(categoria);
-            });
+            CategoriaAbstrata.getListaDeFabricas().forEach(categoria -> cmbCategoria.addItem(categoria));
             
         } catch (Exception e) {
             e.printStackTrace();
