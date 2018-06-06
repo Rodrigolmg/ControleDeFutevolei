@@ -8,6 +8,7 @@ package negocio;
 import entidades.Jogador;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Iterator;
 import observer.CBFV;
 import persistencia.PJogador;
 
@@ -34,7 +35,7 @@ public class NJogador {
         return new PJogador().consultar(codigo);
     }
     
-    public ArrayList<Jogador> listar() throws SQLException{
+    public Iterator<Jogador> listar() throws SQLException{
         return new PJogador().listar();
     }
 }

@@ -81,7 +81,7 @@ public class JanelaPesquisaInscricao extends javax.swing.JInternalFrame implemen
         ));
         jScrollPane1.setViewportView(jTable1);
 
-        setTitle("Pesquisa Jogadores");
+        setTitle("Pesquisa Inscrições");
 
         btnFechar.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         btnFechar.setText("Fechar");
@@ -243,9 +243,7 @@ public class JanelaPesquisaInscricao extends javax.swing.JInternalFrame implemen
         try {
             cmbCategoria.removeAllItems();
             ArrayList<String> listaCat = CategoriaAbstrata.getListaDeFabricas();
-            listaCat.forEach(categoria -> {
-                cmbCategoria.addItem(categoria);
-            });
+            listaCat.forEach(categoria -> cmbCategoria.addItem(categoria));
         } catch (Exception e) {
             e.printStackTrace();
             JOptionPane.showMessageDialog(rootPane, e.getMessage());
@@ -266,69 +264,61 @@ public class JanelaPesquisaInscricao extends javax.swing.JInternalFrame implemen
             switch(index){
                 case 0: 
                     Vector detalhe = new Vector<>();
-                    new NInscricao().listar().forEach(torneio -> {
+                    new NInscricao().listar().forEachRemaining(torneio -> {
                         Vector<String> linha = new Vector<>();
-                        if(torneio.getJogador().getCategoria().getIdCat() == index){
-                            linha.add(Integer.toString(torneio.getIdInscricao()));
-                            linha.add(torneio.getTorneio().getDescricao());
-                            linha.add(Integer.toString(torneio.getTorneio().getId()));
-                            linha.add(torneio.getJogador().getNome());
-                            linha.add(Integer.toString(torneio.getJogador().getId()));
-                            linha.add(Integer.toString(torneio.getJogador().
-                                    getCategoria().getIdCat()));
-                            detalhe.add(linha);
-                        }
+                        linha.add(Integer.toString(torneio.getIdInscricao()));
+                        linha.add(torneio.getTorneio().getDescricao());
+                        linha.add(Integer.toString(torneio.getTorneio().getId()));
+                        linha.add(torneio.getJogador().getNome());
+                        linha.add(Integer.toString(torneio.getJogador().getId()));
+                        linha.add(Integer.toString(torneio.getJogador().
+                                getCategoria().getIdCat()));
+                        detalhe.add(linha);
                     });
                     tblResultado.setModel(new DefaultTableModel(detalhe, cabecalho));
                     break;
                 case 1: 
                     Vector detalhe2 = new Vector<>();
-                    new NInscricao().listar().forEach(torneio -> {
+                    new NInscricao().listar().forEachRemaining(torneio -> {
                         Vector<String> linha = new Vector<>();
-                        if(torneio.getJogador().getCategoria().getIdCat() == index){
-                            linha.add(Integer.toString(torneio.getIdInscricao()));
-                            linha.add(torneio.getTorneio().getDescricao());
-                            linha.add(Integer.toString(torneio.getTorneio().getId()));
-                            linha.add(torneio.getJogador().getNome());
-                            linha.add(Integer.toString(torneio.getJogador().getId()));
-                            linha.add(Integer.toString(torneio.getJogador().
-                                    getCategoria().getIdCat()));
-                            detalhe2.add(linha);
-                        }
+                        linha.add(Integer.toString(torneio.getIdInscricao()));
+                        linha.add(torneio.getTorneio().getDescricao());
+                        linha.add(Integer.toString(torneio.getTorneio().getId()));
+                        linha.add(torneio.getJogador().getNome());
+                        linha.add(Integer.toString(torneio.getJogador().getId()));
+                        linha.add(Integer.toString(torneio.getJogador().
+                                getCategoria().getIdCat()));
+                        detalhe2.add(linha);
                     });
                     tblResultado.setModel(new DefaultTableModel(detalhe2, cabecalho));
                     break;
                 case 2: 
                     Vector detalhe3 = new Vector<>();
-                    new NInscricao().listar().forEach(torneio -> {
+                    new NInscricao().listar().forEachRemaining(torneio -> {
                         Vector<String> linha = new Vector<>();
-                        if(torneio.getJogador().getCategoria().getIdCat() == index){
-                            linha.add(Integer.toString(torneio.getIdInscricao()));
-                            linha.add(torneio.getTorneio().getDescricao());
-                            linha.add(Integer.toString(torneio.getTorneio().getId()));
-                            linha.add(torneio.getJogador().getNome());
-                            linha.add(Integer.toString(torneio.getJogador().getId()));
-                            linha.add(Integer.toString(torneio.getJogador().
-                                    getCategoria().getIdCat()));
-                            detalhe3.add(linha);
-                        }
+                        linha.add(Integer.toString(torneio.getIdInscricao()));
+                        linha.add(torneio.getTorneio().getDescricao());
+                        linha.add(Integer.toString(torneio.getTorneio().getId()));
+                        linha.add(torneio.getJogador().getNome());
+                        linha.add(Integer.toString(torneio.getJogador().getId()));
+                        linha.add(Integer.toString(torneio.getJogador().
+                                getCategoria().getIdCat()));
+                        detalhe3.add(linha);
                     });
                     tblResultado.setModel(new DefaultTableModel(detalhe3, cabecalho));
                     break;
                 case 3: 
                     Vector detalhe4 = new Vector<>();
-                    new NInscricao().listar().forEach(torneio -> {
+                    new NInscricao().listar().forEachRemaining(torneio -> {
                         Vector<String> linha = new Vector<>();
-                        if(torneio.getJogador().getCategoria().getIdCat() == index){
-                            linha.add(Integer.toString(torneio.getIdInscricao()));
-                            linha.add(torneio.getTorneio().getDescricao());
-                            linha.add(Integer.toString(torneio.getTorneio().getId()));
-                            linha.add(torneio.getJogador().getNome());
-                            linha.add(Integer.toString(torneio.getJogador().getId()));
-                            linha.add(Integer.toString(torneio.getJogador().
-                                    getCategoria().getIdCat()));
-                            detalhe4.add(linha);
-                        }
+                        linha.add(Integer.toString(torneio.getIdInscricao()));
+                        linha.add(torneio.getTorneio().getDescricao());
+                        linha.add(Integer.toString(torneio.getTorneio().getId()));
+                        linha.add(torneio.getJogador().getNome());
+                        linha.add(Integer.toString(torneio.getJogador().getId()));
+                        linha.add(Integer.toString(torneio.getJogador().
+                                getCategoria().getIdCat()));
+                        detalhe4.add(linha);
                     });
                     tblResultado.setModel(new DefaultTableModel(detalhe4, cabecalho));
                     break;
@@ -336,8 +326,8 @@ public class JanelaPesquisaInscricao extends javax.swing.JInternalFrame implemen
             
             
         } catch (Exception e) {
-            e.printStackTrace();
-//            JOptionPane.showMessageDialog(rootPane, e.getMessage());
+//            e.printStackTrace();
+            JOptionPane.showMessageDialog(rootPane, e.getMessage());
         }
     }
 }

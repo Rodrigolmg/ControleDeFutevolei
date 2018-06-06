@@ -253,7 +253,7 @@ public class JanelaPesquisaJogador extends javax.swing.JInternalFrame implements
                 case 0: 
                     Vector detalhe = new Vector<>();
                     detalhe.removeAllElements();
-                    CategoriaAbstrata.getInstance(index).getListaJogadores().forEach(jogador -> {
+                    CategoriaAbstrata.getInstance(index).getListaJogadores().forEachRemaining(jogador -> {
                         Vector<String> linha = new Vector<>();
                         linha.add(jogador.getId()+"");
                         linha.add(jogador.getNome());
@@ -265,7 +265,7 @@ public class JanelaPesquisaJogador extends javax.swing.JInternalFrame implements
                     break;
                 case 1: 
                     Vector detalhe2 = new Vector<>();
-                    CategoriaAbstrata.getInstance(index).getListaJogadores().forEach(jogador -> {
+                    CategoriaAbstrata.getInstance(index).getListaJogadores().forEachRemaining(jogador -> {
                         Vector<String> linha = new Vector<>();
                         linha.add(jogador.getId()+"");
                         linha.add(jogador.getNome());
@@ -277,7 +277,7 @@ public class JanelaPesquisaJogador extends javax.swing.JInternalFrame implements
                     break;
                 case 2: 
                     Vector detalhe3 = new Vector<>();
-                    CategoriaAbstrata.getInstance(index).getListaJogadores().forEach(jogador -> {
+                    CategoriaAbstrata.getInstance(index).getListaJogadores().forEachRemaining(jogador -> {
                         Vector<String> linha = new Vector<>();
                         linha.add(jogador.getId()+"");
                         linha.add(jogador.getNome());
@@ -289,7 +289,7 @@ public class JanelaPesquisaJogador extends javax.swing.JInternalFrame implements
                     break;
                 case 3: 
                     Vector detalhe4 = new Vector<>();
-                    CategoriaAbstrata.getInstance(index).getListaJogadores().forEach(jogador -> {
+                    CategoriaAbstrata.getInstance(index).getListaJogadores().forEachRemaining(jogador -> {
                         Vector<String> linha = new Vector<>();
                         linha.add(jogador.getId()+"");
                         linha.add(jogador.getNome());

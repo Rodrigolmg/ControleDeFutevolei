@@ -14,6 +14,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import fabricaabstrata.CategoriaAbstrata;
+import java.util.Iterator;
 
 /**
  *
@@ -88,7 +89,7 @@ public class PJogador extends TPersistencia<Jogador> {
     }
     
     @Override
-    public ArrayList<Jogador> listar() throws SQLException{
+    public Iterator<Jogador> listar() throws SQLException{
         
         String sql = "SELECT * FROM jogador ORDER BY id;";
         
@@ -102,11 +103,11 @@ public class PJogador extends TPersistencia<Jogador> {
             lista.add(new Jogador(rs.getInt(1), rs.getString(2), 
             CategoriaAbstrata.getInstance(rs.getInt(3)), rs.getString(4)));
         }
-        return lista;
+        return lista.iterator();
     }
     
     @Override
-    public ArrayList<Jogador> listarDescricao(int idCategoria) throws SQLException{
+    public Iterator<Jogador> listarDescricao(int idCategoria) throws SQLException{
         
         String sql = "SELECT * FROM jogador WHERE categoria = ? ORDER BY id;";
         
@@ -122,7 +123,7 @@ public class PJogador extends TPersistencia<Jogador> {
             CategoriaAbstrata.getInstance(rs.getInt(3)), rs.getString(4)));
         }
         
-        return lista;
+        return lista.iterator();
     }
 
     

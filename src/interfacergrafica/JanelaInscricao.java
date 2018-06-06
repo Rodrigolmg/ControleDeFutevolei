@@ -579,7 +579,7 @@ public class JanelaInscricao extends javax.swing.JInternalFrame implements Popul
                 case 0:
                     //Tabela do Jogador
                     detalheJog.removeAllElements();
-                    CategoriaAbstrata.getInstance(index).getListaJogadores().forEach(jogador -> {
+                    CategoriaAbstrata.getInstance(index).getListaJogadores().forEachRemaining(jogador -> {
                         Vector<String> linha = new Vector<>();
                         linha.add(jogador.getId()+"");
                         linha.add(jogador.getNome());
@@ -590,7 +590,7 @@ public class JanelaInscricao extends javax.swing.JInternalFrame implements Popul
                     tblJogador.setModel(new DefaultTableModel(detalheJog, tabelaJogador()));
                     //Tabela do Torneio
                     detalheTor.removeAllElements();
-                    CategoriaAbstrata.getInstance(index).getListaTorneios().forEach(torneio ->{
+                    CategoriaAbstrata.getInstance(index).getListaTorneios().forEachRemaining(torneio ->{
                         Vector<String> linhaT = new Vector<>();
                         linhaT.add(torneio.getId()+"");
                         linhaT.add(torneio.getDescricao());
@@ -605,7 +605,7 @@ public class JanelaInscricao extends javax.swing.JInternalFrame implements Popul
                 case 1:
                     //Tabela do Jogador
                     detalheJog.removeAllElements();
-                    CategoriaAbstrata.getInstance(index).getListaJogadores().forEach(jogador -> {
+                    CategoriaAbstrata.getInstance(index).getListaJogadores().forEachRemaining(jogador -> {
                         Vector<String> linha = new Vector<>();
                         linha.add(jogador.getId()+"");
                         linha.add(jogador.getNome());
@@ -616,7 +616,7 @@ public class JanelaInscricao extends javax.swing.JInternalFrame implements Popul
                     tblJogador.setModel(new DefaultTableModel(detalheJog, tabelaJogador()));
                     //Tabela do Torneio
                     detalheTor.removeAllElements();
-                    CategoriaAbstrata.getInstance(index).getListaTorneios().forEach(torneio ->{
+                    CategoriaAbstrata.getInstance(index).getListaTorneios().forEachRemaining(torneio ->{
                         Vector<String> linhaT = new Vector<>();
                         linhaT.add(torneio.getId()+"");
                         linhaT.add(torneio.getDescricao());
@@ -631,7 +631,7 @@ public class JanelaInscricao extends javax.swing.JInternalFrame implements Popul
                 case 2: 
                     //Tabela do Jogador
                     detalheJog.removeAllElements();
-                    CategoriaAbstrata.getInstance(index).getListaJogadores().forEach(jogador -> {
+                    CategoriaAbstrata.getInstance(index).getListaJogadores().forEachRemaining(jogador -> {
                         Vector<String> linha = new Vector<>();
                         linha.add(jogador.getId()+"");
                         linha.add(jogador.getNome());
@@ -642,7 +642,7 @@ public class JanelaInscricao extends javax.swing.JInternalFrame implements Popul
                     tblJogador.setModel(new DefaultTableModel(detalheJog, tabelaJogador()));
                     //Tabela do Torneio
                     detalheTor.removeAllElements();
-                    CategoriaAbstrata.getInstance(index).getListaTorneios().forEach(torneio ->{
+                    CategoriaAbstrata.getInstance(index).getListaTorneios().forEachRemaining(torneio ->{
                         Vector<String> linhaT = new Vector<>();
                         linhaT.add(torneio.getId()+"");
                         linhaT.add(torneio.getDescricao());
@@ -657,7 +657,7 @@ public class JanelaInscricao extends javax.swing.JInternalFrame implements Popul
                 case 3:
                     //Tabela do Jogador
                     detalheJog.removeAllElements();
-                    CategoriaAbstrata.getInstance(index).getListaJogadores().forEach(jogador -> {
+                    CategoriaAbstrata.getInstance(index).getListaJogadores().forEachRemaining(jogador -> {
                         Vector<String> linha = new Vector<>();
                         linha.add(jogador.getId()+"");
                         linha.add(jogador.getNome());
@@ -668,7 +668,7 @@ public class JanelaInscricao extends javax.swing.JInternalFrame implements Popul
                     tblJogador.setModel(new DefaultTableModel(detalheJog, tabelaJogador()));
                     //Tabela do Torneio
                     detalheTor.removeAllElements();
-                    CategoriaAbstrata.getInstance(index).getListaTorneios().forEach(torneio ->{
+                    CategoriaAbstrata.getInstance(index).getListaTorneios().forEachRemaining(torneio ->{
                         Vector<String> linhaT = new Vector<>();
                         linhaT.add(torneio.getId()+"");
                         linhaT.add(torneio.getDescricao());
@@ -731,8 +731,14 @@ public class JanelaInscricao extends javax.swing.JInternalFrame implements Popul
     
     private void atualizar(){
         try {
-            java.sql.Date data = java.sql.Date.valueOf(LocalDate.now());
-            new PInscricao().listar().forEach(inscricao -> cbfv.setDados(new DadosDoTorneio(inscricao, data)));
+            java.sql.Date data = java.sql.Date.valueOf(LocalDate.now()); 
+            new PInscricao().listar().forEachRemaining(inscricao -> {
+                DadosDoTorneio dados = new DadosDoTorneio(inscricao, data);
+                if(dados.getDiasRestantes() <= 0)
+                    System.out.println("Torneio já iniciou/ finalizou!");
+                else
+                    cbfv.setDados(dados);
+            });
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e.getMessage());
         }

@@ -74,7 +74,7 @@ public class JanelaPesquisaTorneio extends javax.swing.JInternalFrame implements
         ));
         jScrollPane1.setViewportView(jTable1);
 
-        setTitle("Pesquisa Jogadores");
+        setTitle("Pesquisa Torneio");
 
         btnFechar.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         btnFechar.setText("Fechar");
@@ -242,65 +242,57 @@ public class JanelaPesquisaTorneio extends javax.swing.JInternalFrame implements
             switch(index){
                 case 0: 
                     Vector detalhe = new Vector<>();
-                    CategoriaAbstrata.getInstance(index).getListaTorneios().forEach(torneio -> {
+                    CategoriaAbstrata.getInstance(index).getListaTorneios().forEachRemaining(torneio -> {
                         Vector<String> linha = new Vector<>();
-                        if(torneio.getCategoria().getIdCat() == index){
-                            linha.add(torneio.getId()+"");
-                            linha.add(torneio.getDescricao());
-                            linha.add(torneio.getCategoria().getIdCat()+"");
-                            linha.add(torneio.getDataInicio()+"");
-                            linha.add(torneio.getDataTermino()+"");
-                            linha.add(torneio.getTaxa()+"");
-                            detalhe.add(linha);
-                        }
+                        linha.add(torneio.getId()+"");
+                        linha.add(torneio.getDescricao());
+                        linha.add(torneio.getCategoria().getIdCat()+"");
+                        linha.add(torneio.getDataInicio()+"");
+                        linha.add(torneio.getDataTermino()+"");
+                        linha.add(torneio.getTaxa()+"");
+                        detalhe.add(linha);
                     });
                     tblResultado.setModel(new DefaultTableModel(detalhe, cabecalho));
                     break;
                 case 1: 
                     Vector detalhe2 = new Vector<>();
-                    CategoriaAbstrata.getInstance(index).getListaTorneios().forEach(torneio -> {
+                    CategoriaAbstrata.getInstance(index).getListaTorneios().forEachRemaining(torneio -> {
                         Vector<String> linha = new Vector<>();
-                        if(torneio.getCategoria().getIdCat() == index){
-                            linha.add(torneio.getId()+"");
-                            linha.add(torneio.getDescricao());
-                            linha.add(torneio.getCategoria().getIdCat()+"");
-                            linha.add(torneio.getDataInicio()+"");
-                            linha.add(torneio.getDataTermino()+"");
-                            linha.add(torneio.getTaxa()+"");
-                            detalhe2.add(linha);
-                        }
+                        linha.add(torneio.getId()+"");
+                        linha.add(torneio.getDescricao());
+                        linha.add(torneio.getCategoria().getIdCat()+"");
+                        linha.add(torneio.getDataInicio()+"");
+                        linha.add(torneio.getDataTermino()+"");
+                        linha.add(torneio.getTaxa()+"");
+                        detalhe2.add(linha);
                     });
                     tblResultado.setModel(new DefaultTableModel(detalhe2, cabecalho));
                     break;
                 case 2: 
                     Vector detalhe3 = new Vector<>();
-                    CategoriaAbstrata.getInstance(index).getListaTorneios().forEach(torneio -> {
+                    CategoriaAbstrata.getInstance(index).getListaTorneios().forEachRemaining(torneio -> {
                         Vector<String> linha = new Vector<>();
-                        if(torneio.getCategoria().getIdCat() == index){
-                            linha.add(torneio.getId()+"");
-                            linha.add(torneio.getDescricao());
-                            linha.add(torneio.getCategoria().getIdCat()+"");
-                            linha.add(torneio.getDataInicio()+"");
-                            linha.add(torneio.getDataTermino()+"");
-                            linha.add(torneio.getTaxa()+"");
-                            detalhe3.add(linha);
-                        }
+                        linha.add(torneio.getId()+"");
+                        linha.add(torneio.getDescricao());
+                        linha.add(torneio.getCategoria().getIdCat()+"");
+                        linha.add(torneio.getDataInicio()+"");
+                        linha.add(torneio.getDataTermino()+"");
+                        linha.add(torneio.getTaxa()+"");
+                        detalhe3.add(linha);
                     });
                     tblResultado.setModel(new DefaultTableModel(detalhe3, cabecalho));
                     break;
                 case 3: 
                     Vector detalhe4 = new Vector<>();
-                    CategoriaAbstrata.getInstance(index).getListaTorneios().forEach(torneio -> {
+                    CategoriaAbstrata.getInstance(index).getListaTorneios().forEachRemaining(torneio -> {
                         Vector<String> linha = new Vector<>();
-                        if(torneio.getCategoria().getIdCat() == index){
-                            linha.add(torneio.getId()+"");
-                            linha.add(torneio.getDescricao());
-                            linha.add(torneio.getCategoria().getIdCat()+"");
-                            linha.add(torneio.getDataInicio()+"");
-                            linha.add(torneio.getDataTermino()+"");
-                            linha.add(torneio.getTaxa()+"");
-                            detalhe4.add(linha);
-                        }
+                        linha.add(torneio.getId()+"");
+                        linha.add(torneio.getDescricao());
+                        linha.add(torneio.getCategoria().getIdCat()+"");
+                        linha.add(torneio.getDataInicio()+"");
+                        linha.add(torneio.getDataTermino()+"");
+                        linha.add(torneio.getTaxa()+"");
+                        detalhe4.add(linha);
                     });
                     tblResultado.setModel(new DefaultTableModel(detalhe4, cabecalho));
                     break;

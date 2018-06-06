@@ -9,6 +9,7 @@ package negocio;
 import entidades.Torneio;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Iterator;
 import persistencia.PTorneio;
 
 /**
@@ -30,7 +31,7 @@ public class NTorneio {
         return new PTorneio().consultar(codigo);
     }
     
-    public ArrayList<Torneio> listar() throws SQLException{
+    public Iterator<Torneio> listar() throws SQLException{
         return new PTorneio().listar();
     } 
 }

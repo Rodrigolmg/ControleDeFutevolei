@@ -25,9 +25,6 @@ public class JanelaJogadorCadastro extends javax.swing.JInternalFrame implements
     
     private JDesktopPane principal;
     
-    /**
-     * Creates new form frmTipoAssociadoCadastro
-     */
     public JanelaJogadorCadastro() {
         initComponents();
         popularCombo();
@@ -245,7 +242,7 @@ public class JanelaJogadorCadastro extends javax.swing.JInternalFrame implements
             Jogador jogador = new Jogador(JanelaPrincipal.cbfv);
             jogador.setNome(txtNome.getText());
             jogador.setCpf(txtCpf.getText());
-            jogador.setCategoria(cmbCategoria.getSelectedIndex()+1);
+            jogador.setCategoria(cmbCategoria.getSelectedIndex());
             
             if(txtIdentificador.getText() != null && !txtIdentificador.getText().isEmpty()){
                 jogador.setId(Integer.parseInt(txtIdentificador.getText()));

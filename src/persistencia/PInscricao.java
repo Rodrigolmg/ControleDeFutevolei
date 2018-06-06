@@ -12,6 +12,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 /**
  *
@@ -73,7 +74,7 @@ public class PInscricao extends TPersistencia<Inscricao>{
     }
     
     @Override
-    public ArrayList<Inscricao> listar() throws SQLException{
+    public Iterator<Inscricao> listar() throws SQLException{
         
         String sql = "SELECT * FROM inscricao ORDER BY id_inscricao;";
         
@@ -88,11 +89,11 @@ public class PInscricao extends TPersistencia<Inscricao>{
                     new PTorneio().consultar(rs.getInt(2)), 
                     new PJogador().consultar(rs.getInt(3))));
         }
-        return lista;
+        return lista.iterator();
     }
 
     @Override
-    public ArrayList<Inscricao> listarDescricao(int id) throws SQLException {
+    public Iterator<Inscricao> listarDescricao(int id) throws SQLException {
         return null;
     }
 

@@ -12,6 +12,7 @@ import entidades.Torneio;
 import fabricasconcretas.SCategoria;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Iterator;
 import persistencia.PCategoria;
 
 /**
@@ -30,8 +31,8 @@ public abstract class CategoriaAbstrata {
     
     public int getIdCat(){ return idCat; }
     public String getDescricao(){ return descricao; }
-    public abstract ArrayList<Jogador> getListaJogadores();
-    public abstract ArrayList<Torneio> getListaTorneios();
+    public abstract Iterator<Jogador> getListaJogadores();
+    public abstract Iterator<Torneio> getListaTorneios();
     public static CategoriaAbstrata getInstance(int categoria){
         return SCategoria.values()[categoria].getInstance();
     }

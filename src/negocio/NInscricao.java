@@ -8,6 +8,7 @@ package negocio;
 import entidades.Inscricao;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Iterator;
 import persistencia.PInscricao;
 
 /**
@@ -27,7 +28,7 @@ public class NInscricao {
         return new PInscricao().consultar(codigo);
     }
     
-    public ArrayList<Inscricao> listar() throws SQLException{
+    public Iterator<Inscricao> listar() throws SQLException{
         return new PInscricao().listar();
     }
 }

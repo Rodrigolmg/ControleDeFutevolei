@@ -10,6 +10,7 @@ import entidades.Torneio;
 import java.util.ArrayList;
 import persistencia.PJogador;
 import fabricaabstrata.CategoriaAbstrata;
+import java.util.Iterator;
 import persistencia.PTorneio;
 
 /**
@@ -24,7 +25,7 @@ public class CategoriaIniciante extends CategoriaAbstrata{
     }
 
     @Override
-    public ArrayList<Jogador> getListaJogadores() {
+    public Iterator<Jogador> getListaJogadores() {
         try {
             return new PJogador().listarDescricao(idCat);
         } catch (Exception e) {
@@ -33,7 +34,7 @@ public class CategoriaIniciante extends CategoriaAbstrata{
     }
 
     @Override
-    public ArrayList<Torneio> getListaTorneios() {
+    public Iterator<Torneio> getListaTorneios() {
         try {
             return new PTorneio().listarDescricao(idCat);
         } catch (Exception e) {

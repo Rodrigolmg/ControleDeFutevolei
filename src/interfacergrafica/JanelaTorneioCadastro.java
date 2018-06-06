@@ -264,7 +264,7 @@ public class JanelaTorneioCadastro extends javax.swing.JInternalFrame implements
         try {
             Validation.isEmpty(validarCampos());
             Validation.invalidSpaces(txtTaxaInscricao.getText());
-            Validation.invalidCaracters(txtTaxaInscricao.getText());
+            //Validation.invalidCaracters(txtTaxaInscricao.getText());
             
             int inicioDia = cmbInicioDia.getSelectedIndex();
             int inicioMes = cmbInicioMes.getSelectedIndex();

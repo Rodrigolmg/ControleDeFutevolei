@@ -25,7 +25,7 @@
     </Container>
   </NonVisualComponents>
   <Properties>
-    <Property name="title" type="java.lang.String" value="Pesquisa Jogadores"/>
+    <Property name="title" type="java.lang.String" value="Pesquisa Inscri&#xe7;&#xf5;es"/>
   </Properties>
   <SyntheticProperties>
     <SyntheticProperty name="formSizePolicy" type="int" value="1"/>

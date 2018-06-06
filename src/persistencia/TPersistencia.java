@@ -12,6 +12,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 /**
  * Classe Template para persistências das classes: 
@@ -23,14 +24,15 @@ import java.util.ArrayList;
  * </ul>
  * 
  * @author Rodrigo Leite
+ * @param <T> 
  */
 public abstract class TPersistencia<T>{
     
     
     public abstract void excluir(int cod) throws SQLException;
     public abstract T consultar(int cod) throws SQLException;
-    public abstract ArrayList<T> listar() throws SQLException;
-    public abstract ArrayList<T> listarDescricao(int id) throws SQLException;
+    public abstract Iterator<T> listar() throws SQLException;
+    public abstract Iterator<T> listarDescricao(int id) throws SQLException;
 
     public abstract PreparedStatement prepararDeclaracao(T obj, Connection cnn, String sql) throws SQLException;
     

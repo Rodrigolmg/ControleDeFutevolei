@@ -13,6 +13,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import fabricaabstrata.CategoriaAbstrata;
+import java.util.Iterator;
 
 /**
  *
@@ -36,7 +37,7 @@ public class PCategoria{
         
     }
     
-    public ArrayList<CategoriaAbstrata> listar() throws SQLException{
+    public Iterator listar() throws SQLException{
         
         String sql = "SELECT * FROM categoria ORDER BY id;";
         
@@ -49,7 +50,7 @@ public class PCategoria{
         while(rs.next()){
             lista.add(CategoriaAbstrata.getInstance(rs.getInt(1)));
         }
-        return lista;
+        return lista.iterator();
     }
     
     public ArrayList<String> listarDescricao() throws SQLException{

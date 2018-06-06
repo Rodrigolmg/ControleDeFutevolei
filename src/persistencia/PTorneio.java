@@ -14,6 +14,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 /**
  *
@@ -96,7 +97,7 @@ public class PTorneio extends TPersistencia<Torneio>{
     }
     
     @Override
-    public ArrayList<Torneio> listar() throws SQLException{
+    public Iterator<Torneio> listar() throws SQLException{
         
         String sql = "SELECT * FROM torneio ORDER BY id_torneio;";
         
@@ -111,11 +112,11 @@ public class PTorneio extends TPersistencia<Torneio>{
                     CategoriaAbstrata.getInstance(rs.getInt(3)), rs.getDate(4),
                     rs.getDate(5), rs.getDouble(6)));
         }
-        return lista;
+        return lista.iterator();
     }
     
     @Override
-    public ArrayList<Torneio> listarDescricao(int idCategoria) throws SQLException{
+    public Iterator<Torneio> listarDescricao(int idCategoria) throws SQLException{
         
         String sql = "SELECT * FROM torneio WHERE categoria = ? ORDER BY id_torneio;";
         
@@ -132,6 +133,6 @@ public class PTorneio extends TPersistencia<Torneio>{
                     rs.getDate(5), rs.getDouble(6)));
         }
         
-        return lista;
+        return lista.iterator();
     }
 }
