@@ -18,6 +18,8 @@ public class Conexao {
     
     private static Connection conexao;
     
+    private Conexao(){}
+    
     public static Connection getConexao(){
         try{
             if(conexao == null || conexao.isClosed()){
